@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Work+Sans:wght@300;400;500&display=swap&family=Rubik+Scribble&display=swap');
+.title1{
+    text-align: center;
+    font-family: 'Press Start 2P';
+    font-size: 1.5rem; 
+    line-height: 2rem; 
+}
+
+.para1{
+    font-family: 'Work Sans';
+    font-size: 1.25rem;
+    line-height: 1.75rem; 	
+    margin-top: 0.75rem;   
+    margin-bottom: 0.75rem;  
+
+}
+
+.title2{
+    text-align: start;
+    font-family: 'Press Start 2P';
+    font-size: 1.125rem; 
+    line-height: 1.75rem; 
+    margin-top: 1.25rem; 
+}
+
+.para2{
+    font-family: 'Work Sans';
+    font-size: 1.25rem;
+    line-height: 1.75rem; 
+    margin-top: 0.5rem; 
+}
+
+.strong{
+    font-weight: 500;
+}
+
+.para3{
+    text-align: center;    
+    font-family: 'Press Start 2P';
+    font-size: 1.5rem;
+    line-height: 2rem;
+
+}
+

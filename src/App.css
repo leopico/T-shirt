@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Work+Sans:wght@300;400;500&display=swap&family=Rubik+Scribble&display=swap');
+
+
+@font-face {
+  font-family: 'Dingos';
+  src: url('./assets/font/Dingos-Stamp_Black.otf') format('openType'),
+       url('./assets/font/Dingos-Stamp_Black.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Lucidity';
+  src: url('./assets/font/FontsFree-Net-lucidity-condensed.ttf') format('truetype'),
+}
+@font-face {
+  font-family: 'Harlow';
+  src: url('./assets/font/Harlow-Solid-Italic_22105.ttf') format('truetype'),
+}
+@font-face {
+  font-family: 'Cubao';
+  src: url('./assets/font/Cubao_Free_Wide.otf') format('openType'),
+}
+@font-face {
+  font-family: 'Rubik One';
+  src: url('./assets/font/RubikOne-Regular.ttf') format('truetype'),
+}
+@font-face {
+  font-family: 'More Sugar';
+  src: url('./assets/font/MoreSugar-Regular.ttf') format('truetype'),
+}
+
+
+.App {
+  text-align: center;
+}
+
+.myFont{
+  font-family: 'Press Start 2P';
+}
+.myFont1{
+  font-family: 'Work Sans';
+}
+.myFont2{
+  font-family: 'Rubik Scribble';
+}
+
+.printFont1{
+  font-family: 'Dingos';
+}
+.printFont2{
+  font-family: 'Lucidity';
+}
+.printFont3{
+  font-family: 'Harlow';
+}
+.printFont4{
+  font-family: 'Cubao';
+}
+.printFont5{
+  font-family: 'Rubik One';
+}
+.printFont6{
+  font-family: 'More Sugar';
+}
+
+.fontCol1{
+  color:#FEE9C4;  
+}
+ .bgCol1{
+  background-color: #E2DBD1;
+ }
+ .bgCol2{
+  background-color: #EAE5DD;
+ }
+
+.frame{
+  border: 1px solid #000;
+  max-width: 500px ;
+  margin-top: -80px;
+}
+
+.footer{
+  display: flex;
+  border: 1px solid black;
+}
+.inpt{
+  height: 40px;
+  width: 100%;
+  font-family: 'Work Sans';
+
+}
+
+.paydbtn{
+  background-color: #000;
+  color:white;
+  width: 50%;
+  height: 40px;
+  font-family: 'Press Start 2P';
+  font-size: 1.5vh;
+  
+}
+
+
+.price{
+  height: 40px;
+  width: 50%;
+  font-family: 'Work Sans';
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.heading{
+  text-align: left;
+  }
+
+
+.card{
+  width:40%;
+  border: 1px solid #000;
+  padding:10px;
+  font-family: 'Work Sans';
+  margin-top: 50px;
+}
+.title{
+  font-weight: 500;
+}
+.poptxt{
+  font-weight: 100;
+}
+.thankyoubtn{
+  padding: 10px;
+  background-color: #DDD0BC;
+  font-family: 'Work Sans';
+ border: 0.5px solid black;
+}
+
+input {
+  display: none;
+}
+.inpt{
+  display: block;
+}
+
+.cart{
+  background-color: #E2DBD1;
+  /* width: 300px; */
+  font-family: 'Work Sans';
+  padding: 10px;
+  font-style: normal;
+  border:1px solid black;
+  border-radius: 5px;
+}
+
+.priceitm{
+  margin-left: 160px;
+}
+
+.totalcart{
+font-size: 15px;
+font-style: normal;
+font-weight: 600;
+padding: 15px;
+}
+
+.totalprice{
+  margin-left: 100px;
+}
+
+
+.form{
+  background-color: #E2DBD1;
+  width: 600px;
+  font-family: 'Work Sans';
+  padding: 10px;
+  font-style: normal;
+  border:1px solid black;
+  border-radius: 5px;
+  
+
+}
+.formrow{
+  /* display: flex;
+  width: 90%; */
+}
+
+.formtxtarea{
+  height: 100px;
+  width: 540px;
+  background: none;
+  padding: 10px;
+  width:60%;
+  margin: 10px;
+  font-family: 'Work Sans';
+}
+.postalcode{
+  display: block;
+  background: none;
+  padding: 10px;
+  width:42.5%;
+  margin: 10px;
+  border: 0.5px solid black;
+  font-family: 'Work Sans';
+}
+
+
+
+.rowsec{
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.colsec{
+  display: block;
+  padding: 10px;
+}
+
+.itembuy{
+  width: 100%;
+  padding: 5%;
+  font-family: 'Press Start 2P';
+  background-color: #000;
+  color: white;
+  border: none;
+
+}
+
+.adcard{
+  background-color: #E2DBD1;
+  width: 600px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  
+}
+.adrow{
+width: 95%;
+padding:10px;
+border: 1px solid #000;
+margin-bottom: 10px;
+border-radius: 10px;
+text-align: left;
+font-family: 'Work Sans';
+}
+.adrow:hover{
+  background-color: #A28D6F;
+}
+.addnewaddress{
+  border: none;
+  background: none;
+  padding: 10px;
+  
+}
+
+.colsecm{
+  display: block;
+  margin-top: -20px;
+}
+
+.useaddbtn{
+  margin-top: 20px;
+  padding: 20px;
+  border:none;
+  background-color: #000;
+  color: white;
+  border-radius: 10px;
+  float: left;
+  font-family: 'Work Sans';
+}
+
+.pagetxt{
+  font-family: 'Work Sans';
+  font-size: 20px;
+  margin-left: 80px;
+}
+
+
+/* .privacylink{
+  display: 'relative';
+  font-family: 'Press Start 2P';
+  font-size: 10px;
+  color:#FEE9C4;
+  float: right;
+  margin-right: 20px;
+  padding: 10px;
+  text-decoration: none;
+} */
+
+.pagetxtbox{
+  margin-top: -80px;
+}
+
+.privacyhead{
+  font-family: 'Press Start 2P';
+  font-size: 16px;
+  padding: 10px;
+}
+
+
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #EAE5DD;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #EAE5DD;
+}
+
+ .bgCol2{
+  background-color: #EAE5DD;
+ }

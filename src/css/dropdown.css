@@ -1,0 +1,52 @@
+
+
+/* .box select {
+    background-color: #E2DBD1;
+  padding: 9px;
+  border: none;
+  height: 100%;
+} */
+
+/* .box::before {
+  content: "\f13a";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 4spx;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+} */
+
+/* .box:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+} */
+
+/* Add this CSS to your stylesheets */
+
+.font-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.font-list li {
+  cursor: pointer;
+  padding: 10px 15px; 
+}
+
+.font-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.font-list li.selected {
+  background-color: #e2dbd1; 
+}
+
+
