@@ -3,7 +3,7 @@ import axios from "axios";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
-  const apiUrl = process.env.REACT_APP_BASE_URL;
+  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const generate = () => {
     // if (prompt.length > 5) {
@@ -38,7 +38,7 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
 
   const bgRemove = () => {
     setLoading(true);
-    const apiKey = process.env.REACT_APP_BG_REMOVE_KEY;
+    const apiKey = import.meta.env.VITE_REACT_APP_BG_REMOVE_KEY;
     const url = "https://api.remove.bg/v1.0/removebg";
     const formData = new FormData();
     formData.append("image_url", frontAIImage.image.withBackground);

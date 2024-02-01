@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "621f64e2-9f8b-42a7-b17e-56d56d6f4607",
+		"name": "hoodiny",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "15335599",
+		"_collection_link": "https://bold-eclipse-546221.postman.co/workspace/regular~d81091c1-5526-40e1-9e06-cf6e3f533a2e/collection/15335599-621f64e2-9f8b-42a7-b17e-56d56d6f4607?action=share&source=collection_link&creator=15335599"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"tanmayjangde7@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{hoodiny_local}}api/v1/auth/signin"
+					},
+					"response": []
+				},
+				{
+					"name": "verifySigninOtp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"tanmayj017@gmail.com\",\r\n    \"otp\": \"0407\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{hoodiny_local}}api/v1/auth/verifySigninOtp"
+					},
+					"response": []
+				},
+				{
+					"name": "waitlist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"tanmayjangde7@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{hoodiny_local}}api/v1/auth/waitlist"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGRmNmExNzYxYjgwM2EyZWFiYTFlMCIsImlhdCI6MTcwMzgwNDIzMSwiZXhwIjoxNzExNTgwMjMxfQ.5aOXv3E4jkt970umHV7lImoLstkeiLZbvdYHQGV1kxc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"659e8964f50f968923d28c7c\",\r\n    \"email\": \"tanmayj017@gmail.com\",\r\n    \"name\": \"APPU DON\",\r\n    \"address\": \"Padharo more desh\",\r\n    \"phone\": 7385690232,\r\n    \"city\": \"PUNE\",\r\n    \"size\": \"L\",\r\n    \"color\": \"red\",\r\n    \"state\": \"MH\",\r\n    \"zip\": 440026\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{hoodiny_local}}api/v1/order/create"
+					},
+					"response": []
+				},
+				{
+					"name": "pay for order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGRmNmExNzYxYjgwM2EyZWFiYTFlMCIsImlhdCI6MTcwMzgwNDIzMSwiZXhwIjoxNzExNTgwMjMxfQ.5aOXv3E4jkt970umHV7lImoLstkeiLZbvdYHQGV1kxc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"razorpay_order_id\": \"order_NKGOxvZjF5Sita\",\r\n    \"razorpay_payment_id\": \"pay_NKGP3HSmEAjOy0\",\r\n    \"razorpay_signature\": \"9daebe74a99c58e446d8442101c03d9e855fe0f66e2bec68adaaa1868d74db5b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{hoodiny_server}}api/v1/order/verifyPayment"
+					},
+					"response": []
+				},
+				{
+					"name": "get all orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{hoodiny_server}}api/v1/order/getAll"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "delete product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGRmNmExNzYxYjgwM2EyZWFiYTFlMCIsImlhdCI6MTcwMzgwMjUyOSwiZXhwIjoxNzExNTc4NTI5fQ.rwdbMwqOlF1Kr3cV-PP8pBGcE9vrnFE391H5YEpuTeM"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hoodiny_local}}api/v1/product/delete/:productId",
+							"host": [
+								"{{hoodiny_local}}api"
+							],
+							"path": [
+								"v1",
+								"product",
+								"delete",
+								":productId"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "jsdh889odsa",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "658dfe33ea1f0a3460d517b7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGRmNmExNzYxYjgwM2EyZWFiYTFlMCIsImlhdCI6MTcwMzgwNDIzMSwiZXhwIjoxNzExNTgwMjMxfQ.5aOXv3E4jkt970umHV7lImoLstkeiLZbvdYHQGV1kxc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"color\": \"black\",\r\n    \"images\": [\"https://s3.ap-south-1.amazonaws.com/cdn.hoodiny.io/4.1.png\", \"https://s3.ap-south-1.amazonaws.com/cdn.hoodiny.io/4.2.png\"],\r\n    \"title\": \"Vintage skull collection\",\r\n    \"description\": \"Dive into the rebellious spirit of the past with our Vintage Skull Collection – a fusion of vintage aesthetics and skull-inspired edge. This collection is not just a fashion statement; it's a homage to the timeless symbol of rebellion, encapsulating the spirit of those who dare to stand out and embrace their individuality. Key Features: Vintage-Inspired Designs: Immerse yourself in the raw energy of our Vintage Skull Collection, featuring meticulously crafted designs that draw inspiration from the rebellious styles of eras gone by. Each piece tells a story of rebellion, freedom, and untamed individuality. Premium Craftsmanship: Crafted from high-quality materials, our Vintage Skull Collection ensures both style and comfort. The premium blend of fabrics provides a soft touch against your skin, making these pieces ideal for expressing your edgy side with ease. Versatile Edge: Whether you're a vintage enthusiast, a rebel at heart, or someone seeking a bold fashion statement, the Vintage Skull Collection offers versatility with an edge. From casual outings to nighttime adventures, these pieces effortlessly complement your fearless style. Iconic Skull Motifs: Embrace the iconic skull motifs that define this collection. Each design is a testament to the enduring symbolism of rebellion, offering a unique and striking way to make a statement without saying a word. Limited-Edition Appeal: Our Vintage Skull Collection is a limited-edition release, ensuring that you own an exclusive piece that stands out in the crowd. Be part of a select group that embodies the rebellious spirit with authenticity. Specifications: Color Palette: Varied vintage-inspired shades Material: Premium Cotton Blend Fit: Contemporary and Comfortable Design Elements: Vintage Skull Motifs\",\r\n    \"price\": 899\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{hoodiny_local}}api/v1/product/create"
+					},
+					"response": []
+				},
+				{
+					"name": "get all products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGRmNmExNzYxYjgwM2EyZWFiYTFlMCIsImlhdCI6MTcwMzgwMjUyOSwiZXhwIjoxNzExNTc4NTI5fQ.rwdbMwqOlF1Kr3cV-PP8pBGcE9vrnFE391H5YEpuTeM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{hoodiny_server}}api/v1/product/get"
+					},
+					"response": []
+				},
+				{
+					"name": "generateAiImage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGRmNmExNzYxYjgwM2EyZWFiYTFlMCIsImlhdCI6MTcwMzgwNDIzMSwiZXhwIjoxNzExNTgwMjMxfQ.5aOXv3E4jkt970umHV7lImoLstkeiLZbvdYHQGV1kxc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prompt\": \"Elon Musk injecting rocket in his veins with no background image\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{hoodiny_local}}api/v1/product/generateAiImage"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "util",
+			"item": [
+				{
+					"name": "get presigned url",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGRmNmExNzYxYjgwM2EyZWFiYTFlMCIsImlhdCI6MTcwMzgwNDIzMSwiZXhwIjoxNzExNTgwMjMxfQ.5aOXv3E4jkt970umHV7lImoLstkeiLZbvdYHQGV1kxc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hoodiny_local}}api/v1/util/presignedurl/:fileExtension",
+							"host": [
+								"{{hoodiny_local}}api"
+							],
+							"path": [
+								"v1",
+								"util",
+								"presignedurl",
+								":fileExtension"
+							],
+							"variable": [
+								{
+									"key": "fileExtension",
+									"value": "png"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

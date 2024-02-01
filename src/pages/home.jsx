@@ -83,7 +83,7 @@ const Home = () => {
     background: true,
   });
 
-  const apiUrl = process.env.REACT_APP_BASE_URL;
+  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const navigate = useNavigate();
 
   const createProduct = () => {
@@ -224,7 +224,7 @@ const Home = () => {
                       // alt="centered-logo"
                     />
                     {frontLoading && (
-                      <h1 className="absolute w-24 top-[47%] left-[51%] transform -translate-x-1/2 -translate-y-1/2">
+                      <h1 className="absolute w-24 text-yellow-500 text-xl font-bold top-[47%] left-[51%] transform -translate-x-1/2 -translate-y-1/2">
                         loading
                       </h1>
                     )}

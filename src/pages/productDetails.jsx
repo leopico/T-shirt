@@ -12,7 +12,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import Slider from "../components/home/slider";
 
 function ProductDetails() {
-  const apiUrl = process.env.REACT_APP_BASE_URL;
+  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [selSize, setSelSize] = useState(["S", "M", "L", "XL", "XXL"]);
   const [size, setSize] = useState(null);
   const [color, setColor] = useState(null);

@@ -20,7 +20,7 @@ function UploadSection({ frontUploadImage, setFrontUploadImage, setLoading }) {
 
   const bgRemove = () => {
     setLoading(true);
-    const apiKey = process.env.REACT_APP_BG_REMOVE_KEY;
+    const apiKey = import.meta.env.VITE_REACT_APP_BG_REMOVE_KEY;
     const url = "https://api.remove.bg/v1.0/removebg";
     const formData = new FormData();
 

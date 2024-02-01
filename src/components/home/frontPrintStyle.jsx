@@ -6,7 +6,7 @@ import AiSection from "./frontAiSection";
 import UploadSection from "./frontUploadSection";
 import S3FileUpload from "react-s3";
 import AWS from "aws-sdk";
-import { upload } from "@testing-library/user-event/dist/upload";
+// import { upload } from "@testing-library/user-event/dist/upload";
 
 function FrontPrintStyle({
   frontPrintStyle,

@@ -9,7 +9,7 @@ function SignIn() {
   const [otp, setOtp] = useState("");
   const [showOtp, setShowOtp] = useState(false);
 
-  const apiUrl = process.env.REACT_APP_BASE_URL;
+  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

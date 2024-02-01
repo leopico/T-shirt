@@ -1,6 +1,6 @@
 const ThankYou = () => {
   return (
-    <center className="my-44 h-screen text-center">
+    <center className="h-screen flex flex-col justify-center items-center text-center">
       <div className="flex w-fit  gap-2 items-center  mx-auto">
         <h1 className="myFont1 md:text-3xl sm:text-2xl text-xl">
           payment successful{" "}

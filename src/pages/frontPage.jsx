@@ -10,7 +10,8 @@ import { successNotify, errorNotify } from "./utils/notification";
 import { Link } from "react-router-dom";
 
 function FrontPage() {
-  const apiUrl = process.env.REACT_APP_BASE_URL;
+  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+  // console.log("api-url: ", apiUrl);
   const [email, setEmail] = useState("");
   const [products, setProducts] = useState(null);
 
@@ -18,7 +19,7 @@ function FrontPage() {
     axios
       .get(`${apiUrl}/api/v1/product/get`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setProducts(res.data.products);
       })
       .catch((err) => console.log("err : ", err));
@@ -110,7 +111,7 @@ function FrontPage() {
           <div className="flex flex-wrap gap-9 justify-center items-center">
             {products &&
               products.map((item) => (
-                <div className="relative flex flex-col items-center mt-2  border border-black">
+                <div key={item._id} className="relative flex flex-col items-center mt-2  border border-black">
                   <Link to={`/product/${item._id}`}>
                     <div
                       className="md:w-[300px] w-[250px] md:h-[350px] h-[280px]"

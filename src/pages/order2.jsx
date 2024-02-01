@@ -8,7 +8,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 const OrderPage2 = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const apiUrl = process.env.REACT_APP_BASE_URL;
+  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [isValid, setIsValid] = useState(true);
   const [formData, setFormData] = useState({
     fname: "",
@@ -26,7 +26,7 @@ const OrderPage2 = () => {
 
   const initPayment = (data) => {
     const options = {
-      key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+      key: import.meta.env.VITE_REACT_APP_RAZORPAY_KEY_ID,
       amount: data.hoodinyOrder.price,
       currency: "INR",
       name: "testName",
