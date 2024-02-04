@@ -6,15 +6,12 @@ function selectSize({ setSize }) {
   };
   return (
     <div className="box">
-      <select className="myFont text-[14px] bgCol1" onChange={handleSize}>
+      <select className="myFont text-sm bgCol1 w-3 sm:w-auto cursor-pointer" onChange={handleSize}>
         <option disabled selected>
-          Size
+          Mousepad
         </option>
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-        <option value="XXL">XXL</option>
+        <option value="S">coming</option>
+        <option value="M">coming</option>
       </select>
     </div>
   );

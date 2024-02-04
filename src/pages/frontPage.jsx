@@ -19,7 +19,7 @@ function FrontPage() {
     axios
       .get(`${apiUrl}/api/v1/product/get`)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setProducts(res.data.products);
       })
       .catch((err) => console.log("err : ", err));
@@ -68,6 +68,7 @@ function FrontPage() {
             to={
               "https://www.instagram.com/studentpreneur.club?igsh=a2RpdXd3cW00NXk5 "
             }
+            target="_blink"
           >
             <button className="md:py-3 py-1 lg:px-14 md:px-10 sm:px-6 px-3 flex md:space-x-8 space-x-3 justify-evenly items-center bgCol2 mt-12 mx-auto border-2 border-black hover:bg-zinc-200">
               <h1 className="myFont lg:text-2xl md:text-xl sm:text-lg text-sm">
@@ -79,7 +80,7 @@ function FrontPage() {
             </button>
           </Link>
           <div className="flex lg:flex-row flex-col md:w-[60%] sm:w-[85%] w-[97%] mt-12 lg:space-x-3 space-y-2 mx-auto lg:items-end items-center justify-center">
-            <div className="w-full flex flex-col gap-2 w-1/2 items-start">
+            <div className="w-full flex flex-col gap-2 items-start">
               <label htmlFor="email" className="text-lg myFont1">
                 Email
               </label>
@@ -93,7 +94,7 @@ function FrontPage() {
               />
             </div>
             <button
-              className="bg-black w-full text-white myFont lg:text-lg md:text-md text-sm w-fit text-xm px-4 py-[12px]"
+              className="bg-black w-full text-white myFont lg:text-lg md:text-md text-sm text-xm px-4 py-[12px]"
               onClick={toWaitlist}
             >
               Join Waitlist

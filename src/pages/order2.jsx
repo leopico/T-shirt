@@ -6,9 +6,9 @@ import axios from "axios";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 const OrderPage2 = () => {
+  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const location = useLocation();
-  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [isValid, setIsValid] = useState(true);
   const [formData, setFormData] = useState({
     fname: "",
@@ -23,6 +23,7 @@ const OrderPage2 = () => {
 
   console.log(location);
   const productId = location.state.productId;
+  // console.log(productId);
 
   const initPayment = (data) => {
     const options = {
@@ -61,6 +62,7 @@ const OrderPage2 = () => {
         color: "#EAE5DD",
       },
     };
+    // console.log("options: ", options);
     const rzp1 = new window.Razorpay(options);
     rzp1.open();
   };

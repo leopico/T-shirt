@@ -35,7 +35,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <Navbar />
-    <RouterProvider router={router} />
-    <Footer />
+    <RouterProvider router={router}/>
+    <Footer/>
   </>
 );

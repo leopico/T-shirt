@@ -19,6 +19,7 @@ function FrontPrintStyle({
   frontUploadImage,
   setFrontUploadImage,
 }) {
+  
   const handlePrintText = (e) => {
     const inputValue = e.target.value;
     if (inputValue.length <= 7) {
@@ -42,7 +43,7 @@ function FrontPrintStyle({
   return (
     <>
       {/* print options */}
-      <div className="flex justify-center space-x-4 p-2 myFont border border-black text-sm">
+      <div className="flex justify-center space-x-4 p-2 myFont border border-black/10 bg-[#E2DBD1] text-sm">
         <button
           className={`${frontPrintStyle == "text" ? "underline" : ""}`}
           onClick={() => setFrontPrintStyle("text")}

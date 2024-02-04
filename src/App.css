@@ -94,8 +94,16 @@
   width: 50%;
   height: 40px;
   font-family: 'Press Start 2P';
-  font-size: 1.5vh;
+  font-size: 2vh;
   
+}
+
+.wishlist {
+  background-color: #59575400;
+  width: 50%;
+  height: 40px;
+  font-size: 2vh;
+  font-size: large;
 }
 
 
