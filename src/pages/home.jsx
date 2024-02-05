@@ -1,33 +1,20 @@
 import { useState, useEffect } from "react";
 import SelectSize from "../components/home/selectSize";
 import FrontPrintStyle from "../components/home/frontPrintStyle";
-import front from "../assets/main.png";
-import back from "../assets/main1.png";
-import mouse from "../assets/mouse.png";
+import mouse from "../assets/mousepad.png";
 import grid from "../assets/background.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ItemCard from "../components/home/items";
 import axios from "axios";
 
 const Home = () => {
-  // let [showSignIn, setShowSignIn] = useState(false);
   let [products, setProducts] = useState(null);
   let [view, setView] = useState("front");
-  let [showView, setShowView] = useState(false);
   let [size, setSize] = useState("");
   let [frontPrintStyle, setFrontPrintStyle] = useState("text");
-  let [backPrintStyle, setBackPrintStyle] = useState("text");
   let [frontLoading, setFrontLoading] = useState(false);
-  let [backLoading, setBackLoading] = useState(false);
   // for Text
   let [frontText, setFrontText] = useState({
-    text: "",
-    value: "printFont1 text-lg",
-    label: "Dingos",
-    print: "printFont1 text-lg",
-  });
-
-  let [backText, setBackText] = useState({
     text: "",
     value: "printFont1 text-lg",
     label: "Dingos",
@@ -50,17 +37,6 @@ const Home = () => {
     background: true,
   });
 
-  let [backAIImage, setBackAiImage] = useState({
-    prompt: null,
-    image: {
-      withBackground:
-        "https://th.bing.com/th/id/R.19dd1c0054da751855b7c0a243910e65?rik=MKqvVxOYs8qY1Q&riu=http%3a%2f%2fclipart-library.com%2fimages%2frcnr6RXei.jpg&ehk=ilUXrsNJ3oQVy1XWIC1cTjwF00XXgFm7cdq1y9d%2fflI%3d&risl=&pid=ImgRaw&r=0",
-      noBackground:
-        "https://th.bing.com/th/id/OIG.lHtJpivzlvMDkSAWIHlL?w=1024&h=1024&rs=1&pid=ImgDetMain",
-    },
-    background: true,
-  });
-
   // for Uploaded Image
   let [frontUploadImage, setFrontUploadImage] = useState({
     image: {
@@ -70,16 +46,7 @@ const Home = () => {
     background: true,
   });
 
-  let [backUploadImage, setBackUploadImage] = useState({
-    image: {
-      withBackground: null,
-      noBackground: null,
-    },
-    background: true,
-  });
-
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
-  const navigate = useNavigate();
 
   const createProduct = () => {
     // if (size && color && category) {
@@ -176,13 +143,12 @@ const Home = () => {
           <div className="relative border border-black">
             {/* Front image */}
 
-            <img src={mouse} className="w-[630px] h-2/3" alt="logo" />
-
+            <img src={mouse} className="w-[600px] h-2/3" alt="logo" />
 
             {frontPrintStyle == "text" && (
-              <div className="absolute w-40 top-[40%] left-[40%] md:left-[37%] lg:left-[43%] transform -translate-x-1/2 -translate-y-1/2">
+              <div className="absolute w-40 top-[50%] left-[43%] md:left-[45%] transform -translate-x-1/2 -translate-y-1/2">
                 <h1
-                  className={`${frontText.print} text-white text-4xl md:text-5xl`}>
+                  className={`${frontText.print} text-white text-[40px] md:text-5xl`}>
                   {frontText.text}
                 </h1>
               </div>
@@ -200,7 +166,7 @@ const Home = () => {
                 // alt="centered-logo"
                 />
                 {frontLoading && (
-                  <h1 className="absolute w-24 text-yellow-500 text-xl font-bold top-[47%] left-[51%] transform -translate-x-1/2 -translate-y-1/2">
+                  <h1 className="absolute w-24 text-yellow-500 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
                     loading
                   </h1>
                 )}
@@ -209,7 +175,8 @@ const Home = () => {
 
             {frontPrintStyle == "upload" && (
               <>
-                <img
+                <div className="w-[600px]">
+                  <img
                   src={
                     frontUploadImage.background
                       ? frontUploadImage.image.withBackground != null &&
@@ -218,14 +185,10 @@ const Home = () => {
                       )
                       : frontUploadImage.image.noBackground
                   }
-                  className="absolute w-72 top-[42%] left-[45%] transform -translate-x-1/2 -translate-y-1/2"
-                // alt="centered-logo"
+                  className="absolute sm:w-[500px] sm:h-[380px] md:w-[490px] md:h-[390px] top-[50%] rounded-3xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
+                  alt="centered-logo"
                 />
-                {frontLoading && (
-                  <h1 className="absolute w-24 top-[47%] left-[51%] transform -translate-x-1/2 -translate-y-1/2">
-                    loading
-                  </h1>
-                )}
+                </div>
               </>
             )}
 
