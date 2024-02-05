@@ -35,11 +35,6 @@ function FrontPrintStyle({
     }
   };
 
-  //   console.log(process.env.REACT_APP_AWS_BUCKET_NAME);
-  // useEffect(
-  //   () => console.log(frontUploadImage.image),
-  //   [frontUploadImage.image]
-  // );
   return (
     <>
       {/* print options */}
@@ -66,6 +61,7 @@ function FrontPrintStyle({
 
       <div className="flex justify-between w-full border border-black">
         <div className="w-full">
+
           {frontPrintStyle == "text" && (
             <div className="flex w-full">
               <input
@@ -82,6 +78,7 @@ function FrontPrintStyle({
               />
             </div>
           )}
+
           {frontPrintStyle == "prompt" && (
             <AiSection
               frontAIImage={frontAIImage}
@@ -89,6 +86,7 @@ function FrontPrintStyle({
               setLoading={setLoading}
             />
           )}
+
           {frontPrintStyle === "upload" && (
             <UploadSection
               setFrontUploadImage={setFrontUploadImage}

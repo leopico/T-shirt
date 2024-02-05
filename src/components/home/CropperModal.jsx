@@ -3,8 +3,8 @@ import { useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 
 const boxStyle = {
-    width: "600px",
-    height: "590px",
+    width: "500px",
+    height: "490px",
     display: "flex",
     flexFlow: "column",
     justifyContent: "center",
@@ -18,13 +18,16 @@ const modalStyle = {
 
 const CropperModal = ({ src, modalOpen, setModalOpen, setFrontUploadImage }) => {
     const [slideValue, setSlideValue] = useState(10);
+    const [rotate, setRotate] = useState(0);
     const cropRef = useRef(null);
 
     const handleSave = async () => {
         if (cropRef) {
             const dataUrl = cropRef.current.getImage().toDataURL();
+            // console.log(`dataUrl: ${dataUrl}`);
             const result = await fetch(dataUrl);
             const blob = await result.blob();
+            // console.log(`upload-blob: ${blob}`);
             setFrontUploadImage((prevFrontUploadImage) => ({
                 ...prevFrontUploadImage,
                 image: {
@@ -47,7 +50,7 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setFrontUploadImage }) => 
                     borderRadius={10}
                     color={[0, 0, 0, 0.72]}
                     scale={slideValue / 10}
-                    rotate={0}
+                    rotate={rotate}
                 />
 
                 {/* MUI Slider */}
@@ -63,6 +66,20 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setFrontUploadImage }) => 
                     defaultValue={slideValue}
                     value={slideValue}
                     onChange={(e) => setSlideValue(e.target.value)}
+                />
+                <Slider
+                    min={0}
+                    max={24}
+                    step={1}
+                    sx={{
+                        margin: "0 auto",
+                        width: "80%",
+                        color: "cyan"
+                    }}
+                    size="medium"
+                    defaultValue={rotate / 15}
+                    value={rotate / 15}
+                    onChange={(e, value) => setRotate(value * 15)}
                 />
                 <Box
                     sx={{

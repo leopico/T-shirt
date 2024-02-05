@@ -5,6 +5,7 @@ import mouse from "../assets/mousepad.png";
 import grid from "../assets/background.png";
 import { Link } from "react-router-dom";
 import ItemCard from "../components/home/items";
+import { TbFidgetSpinner } from "react-icons/tb";
 import axios from "axios";
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
   let [size, setSize] = useState("");
   let [frontPrintStyle, setFrontPrintStyle] = useState("text");
   let [frontLoading, setFrontLoading] = useState(false);
+
   // for Text
   let [frontText, setFrontText] = useState({
     text: "",
@@ -28,12 +30,6 @@ const Home = () => {
       withBackground: null,
       noBackground: null,
     },
-    // image: {
-    //   withBackground:
-    //     "https://th.bing.com/th/id/R.19dd1c0054da751855b7c0a243910e65?rik=MKqvVxOYs8qY1Q&riu=http%3a%2f%2fclipart-library.com%2fimages%2frcnr6RXei.jpg&ehk=ilUXrsNJ3oQVy1XWIC1cTjwF00XXgFm7cdq1y9d%2fflI%3d&risl=&pid=ImgRaw&r=0",
-    //   noBackground:
-    //     "https://th.bing.com/th/id/OIG.lHtJpivzlvMDkSAWIHlL?w=1024&h=1024&rs=1&pid=ImgDetMain",
-    // },
     background: true,
   });
 
@@ -86,7 +82,7 @@ const Home = () => {
         },
       })
       .then((data) => {
-        console.log("Data:", data);
+        // console.log("Data:", data);
         setProducts(data.data.products);
       })
       .catch((error) => {
@@ -156,18 +152,20 @@ const Home = () => {
 
             {frontPrintStyle == "prompt" && (
               <>
-                <img
-                  src={
-                    frontAIImage.background
-                      ? frontAIImage.image.withBackground
-                      : frontAIImage.image.noBackground
-                  }
-                  className="absolute w-24 top-[47%] left-[51%] transform -translate-x-1/2 -translate-y-1/2"
-                // alt="centered-logo"
-                />
+                <div className="w-[600px]">
+                  <img
+                    src={
+                      frontAIImage.background
+                        ? frontAIImage.image.withBackground
+                        : frontAIImage.image.noBackground
+                    }
+                    className="absolute sm:w-[500px] sm:h-[380px] md:w-[490px] md:h-[390px] top-[50%] rounded-3xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
+                    alt="centered-logo"
+                  />
+                </div>
                 {frontLoading && (
                   <h1 className="absolute w-24 text-yellow-500 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
-                    loading
+                    <TbFidgetSpinner size={50} className="animate-spin" />
                   </h1>
                 )}
               </>
@@ -177,17 +175,17 @@ const Home = () => {
               <>
                 <div className="w-[600px]">
                   <img
-                  src={
-                    frontUploadImage.background
-                      ? frontUploadImage.image.withBackground != null &&
-                      URL.createObjectURL(
-                        frontUploadImage.image.withBackground
-                      )
-                      : frontUploadImage.image.noBackground
-                  }
-                  className="absolute sm:w-[500px] sm:h-[380px] md:w-[490px] md:h-[390px] top-[50%] rounded-3xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
-                  alt="centered-logo"
-                />
+                    src={
+                      frontUploadImage.background
+                        ? frontUploadImage.image.withBackground != null &&
+                        URL.createObjectURL(
+                          frontUploadImage.image.withBackground
+                        )
+                        : frontUploadImage.image.noBackground
+                    }
+                    className="absolute sm:w-[500px] sm:h-[380px] md:w-[490px] md:h-[390px] top-[50%] rounded-3xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
+                    alt="centered-logo"
+                  />
                 </div>
               </>
             )}

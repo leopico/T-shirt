@@ -3,8 +3,8 @@ import { useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 
 const boxStyle = {
-    width: "300px",
-    height: "300px",
+    width: "500px",
+    height: "490px",
     display: "flex",
     flexFlow: "column",
     justifyContent: "center",
@@ -18,37 +18,41 @@ const modalStyle = {
 
 const CropperAiModal = ({ src, modalOpen, setModalOpen, setFrontAiImage }) => {
     const [slideValue, setSlideValue] = useState(10);
+    const [rotate, setRotate] = useState(0);
     const cropRef = useRef(null);
+    // console.log(`url-img: ${src}`);
 
     const handleSave = async () => {
-        if (cropRef) {
-            const dataUrl = cropRef.current.getImage().toDataURL();
-            const result = await fetch(dataUrl);
-            const blob = await result.blob();
-            setFrontAiImage((prevFrontAIImage) => ({
-                ...prevFrontAIImage,
-                image: {
-                    withBackground: blob,
-                    noBackground: blob,
-                },
-            }));
-            setModalOpen(false);
-        }
-    };
-
+    if (cropRef) {
+        const dataUrl = cropRef.current.getImage().toDataURL();
+        // console.log(`dataurl: ${dataUrl}`);
+        const result = await fetch(dataUrl);
+        const blob = await result.blob();
+        const aiImage = URL.createObjectURL(blob);
+        // console.log(`ai-image: ${aiImage}`);
+        setFrontAiImage((prevFrontAIImage) => ({
+            ...prevFrontAIImage,
+            image: {
+                withBackground: aiImage,
+            },
+        }));
+        setModalOpen(false);
+    }
+};
 
     return (
         <Modal sx={modalStyle} open={modalOpen}>
             <Box sx={boxStyle}>
                 <AvatarEditor
                     ref={cropRef}
-                    image={src}
+                    image={'https://cors-anywhere.herokuapp.com/' + src}
                     style={{ width: "100%", height: "100%" }}
                     border={50}
                     borderRadius={10}
                     color={[0, 0, 0, 0.72]}
                     scale={slideValue / 10}
-                    rotate={0}
+                    rotate={rotate}
+                    crossOrigin="anonymous"
                 />
 
                 {/* MUI Slider */}
@@ -64,6 +68,20 @@ const CropperAiModal = ({ src, modalOpen, setModalOpen, setFrontAiImage }) => {
                     defaultValue={slideValue}
                     value={slideValue}
                     onChange={(e) => setSlideValue(e.target.value)}
+                />
+                <Slider
+                    min={0}
+                    max={24}
+                    step={1}
+                    sx={{
+                        margin: "0 auto",
+                        width: "80%",
+                        color: "cyan"
+                    }}
+                    size="medium"
+                    defaultValue={rotate / 15}
+                    value={rotate / 15}
+                    onChange={(e, value) => setRotate(value * 15)}
                 />
                 <Box
                     sx={{

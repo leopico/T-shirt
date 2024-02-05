@@ -28,7 +28,7 @@ function UploadSection({ setFrontUploadImage }) {
           setFrontUploadImage={setFrontUploadImage}
         />
         <a href="/" onClick={handleInputClick}>
-          <FcAddImage className="w-14 h-14 md:w-20 md:h-20 p-2" />
+          <FcAddImage className="w-14 h-14 md:w-20 md:h-20 p-2"/>
         </a>
         <small className="myFont text-[8px] md:text-[10px]">Click to select image</small>
         <input
