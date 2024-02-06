@@ -164,7 +164,7 @@ const Home = () => {
                   />
                 </div>
                 {frontLoading && (
-                  <h1 className="absolute w-24 text-yellow-500 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
+                  <h1 className="absolute w-24 text-yellow-500/85 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
                     <TbFidgetSpinner size={50} className="animate-spin" />
                   </h1>
                 )}

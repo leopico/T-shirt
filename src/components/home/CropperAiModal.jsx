@@ -20,7 +20,7 @@ const CropperAiModal = ({ src, modalOpen, setModalOpen, setFrontAiImage }) => {
     const [slideValue, setSlideValue] = useState(10);
     const [rotate, setRotate] = useState(0);
     const cropRef = useRef(null);
-    // console.log(`url-img: ${src}`);
+    console.log(`url-img: ${src}`);
 
     const handleSave = async () => {
     if (cropRef) {
