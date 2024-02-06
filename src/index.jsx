@@ -29,12 +29,12 @@ const router = createBrowserRouter([
   { path: "/about", element: <About /> },
   { path: "/privacy", element: <Privacy /> },
   { path: "/termsAndConitions", element: <TermsAndConitions /> },
-  { path: "/*", element: <NotFound /> },
+  { path: "*", element: <NotFound /> },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
-    <Navbar />
+    <Navbar />    
     <RouterProvider router={router}/>
     <Footer/>
   </>
