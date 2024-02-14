@@ -2,37 +2,52 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaArrowRightLong } from "react-icons/fa6";
 import CropperAiModal from "./CropperAiModal";
+import { v4 as uuidv4 } from "uuid";
 
 function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const [src, setSrc] = useState(null);
+  const [uniqueId, setUniqueId] = useState(null);
+  const [images, setImages] = useState([]);
+
   const [modalOpen, setModalOpen] = useState(false);
 
-  const generate = () => {
-    setLoading(true);
+  const generate = async () => {
+    try {
+      setLoading(true);
     // console.log(`${frontAIImage.prompt}`);
-    axios
+    const newUniqueId = uuidv4();
+    setUniqueId(newUniqueId);
+    await axios
       .post(
         `${apiUrl}/api/v1/product/generateAiImage`,
         {
           "prompt": frontAIImage.prompt,
+          "uniqueId": newUniqueId,
         },
         {
           headers: {
             Authorization: localStorage.getItem("header"),
           },
         }
-      )
-      .then((data) => {
-        setSrc(data.data[0].url);
-        setLoading(false);
-        setModalOpen(true);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
+      );
+      // await fetchImages(newUniqueId);
+      setLoading(false);
+      setModalOpen(true);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
+  const fetchImages = async (newUniqueId) => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/v1/product/fetchImage/${newUniqueId}`);
+      setImages(response.data.images);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
 
   return (
     <div className="flex">
