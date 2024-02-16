@@ -8,33 +8,33 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const [src, setSrc] = useState(null);
-  const [uniqueId, setUniqueId] = useState(null);
-  const [images, setImages] = useState([]);
-
   const [modalOpen, setModalOpen] = useState(false);
 
   const generate = async () => {
     try {
       setLoading(true);
-    // console.log(`${frontAIImage.prompt}`);
-    const newUniqueId = uuidv4();
-    setUniqueId(newUniqueId);
-    await axios
-      .post(
-        `${apiUrl}/api/v1/product/generateAiImage`,
-        {
-          "prompt": frontAIImage.prompt,
-          "uniqueId": newUniqueId,
-        },
-        {
-          headers: {
-            Authorization: localStorage.getItem("header"),
+      // console.log(`${frontAIImage.prompt}`);
+      const newUniqueId = uuidv4();
+      await axios
+        .post(
+          `${apiUrl}/api/v1/product/generateAiImage`,
+          {
+            "prompt": frontAIImage.prompt,
+            "uniqueId": newUniqueId,
           },
-        }
-      );
-      // await fetchImages(newUniqueId);
-      setLoading(false);
-      setModalOpen(true);
+          {
+            headers: {
+              Authorization: localStorage.getItem("header"),
+            },
+          }
+        );
+      setTimeout(async () => {
+        console.log(newUniqueId);
+        await fetchImages(newUniqueId);
+        setLoading(false);
+        setModalOpen(true);
+      }, 5000);
+
     } catch (error) {
       console.error("Error:", error);
     }
@@ -43,7 +43,8 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
   const fetchImages = async (newUniqueId) => {
     try {
       const response = await axios.get(`${apiUrl}/api/v1/product/fetchImage/${newUniqueId}`);
-      setImages(response.data.images);
+      console.log(response.data.images[0]);
+      setSrc(response.data.images);
     } catch (error) {
       console.error("Error:", error);
     }
