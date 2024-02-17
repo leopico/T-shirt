@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
-  const [src, setSrc] = useState(null);
+  const [src, setSrc] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
   const generate = async () => {
@@ -27,13 +27,14 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
               Authorization: localStorage.getItem("header"),
             },
           }
-        );
+      );
+      await setFrontAiImage({ ...frontAIImage, prompt: null });
       setTimeout(async () => {
-        console.log(newUniqueId);
+        // console.log(newUniqueId);
         await fetchImages(newUniqueId);
         setLoading(false);
         setModalOpen(true);
-      }, 5000);
+      }, 60000);
 
     } catch (error) {
       console.error("Error:", error);
@@ -43,8 +44,8 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
   const fetchImages = async (newUniqueId) => {
     try {
       const response = await axios.get(`${apiUrl}/api/v1/product/fetchImage/${newUniqueId}`);
-      console.log(response.data.images[0]);
-      setSrc(response.data.images);
+      // console.log(response.data.images[0]);
+      setSrc(response.data.images[0]);
     } catch (error) {
       console.error("Error:", error);
     }

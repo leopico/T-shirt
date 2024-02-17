@@ -45,7 +45,7 @@ const CropperAiModal = ({ src, modalOpen, setModalOpen, setFrontAiImage }) => {
             <Box sx={boxStyle}>
                 <AvatarEditor
                     ref={cropRef}
-                    image={'https://cors-anywhere.herokuapp.com/' + src}
+                    image={src}
                     style={{ width: "100%", height: "100%" }}
                     border={50}
                     borderRadius={10}
