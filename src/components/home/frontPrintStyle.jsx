@@ -88,6 +88,8 @@ function FrontPrintStyle({
           {frontPrintStyle === "upload" && (
             <UploadSection
               setFrontUploadImage={setFrontUploadImage}
+              frontUploadImage={frontUploadImage}
+              setLoading={setLoading}
             />
           )}
         </div>

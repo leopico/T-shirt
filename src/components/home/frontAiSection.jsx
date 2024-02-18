@@ -28,7 +28,6 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
             },
           }
       );
-      await setFrontAiImage({ ...frontAIImage, prompt: null });
       setTimeout(async () => {
         // console.log(newUniqueId);
         await fetchImages(newUniqueId);
@@ -49,7 +48,7 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
     } catch (error) {
       console.error("Error:", error);
     }
-  }
+  };
 
   return (
     <div className="flex">
@@ -58,10 +57,10 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
         setModalOpen={setModalOpen}
         src={src}
         setFrontAiImage={setFrontAiImage}
-      />
+      /> 
       <textarea
-        placeholder="Enter your style prompt and let AI design your clothes..."
-        className="h-20 w-full bg-[#59575400] px-2 focus:outline-none resize-none"
+        placeholder="Enter your style prompt and let AI design your mouse pad... It will have taken 1 ~ 2 mins for generating image and you will get pixel perfect after you had cropped"
+        className="h-20 w-full bg-[#59575400] px-2 focus:outline-none resize-none placeholder:text-gray-500"
         onChange={(e) =>
           setFrontAiImage({ ...frontAIImage, prompt: e.target.value })
         }
@@ -71,6 +70,11 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
           <FaArrowRightLong className="mx-auto pr-1 hover:pr-0 duration-100" />
         </button>
       </div>
+      <img
+        src={src}
+        alt="ai-generate"
+        className="w-1 h-1 object-cover bgCol1 hidden"
+      />
     </div>
   );
 }

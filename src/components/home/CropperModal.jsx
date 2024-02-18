@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 
 const boxStyle = {
-    width: "500px",
+    width: "490px",
     height: "490px",
     display: "flex",
     flexFlow: "column",
@@ -98,7 +98,7 @@ const CropperModal = ({ src, modalOpen, setModalOpen, setFrontUploadImage }) => 
                         cancel
                     </Button>
                     <Button
-                        sx={{ background: "#5596e6" }}
+                        sx={{ background: "cyan", color: "black" }}
                         size="small"
                         variant="contained"
                         onClick={handleSave}
