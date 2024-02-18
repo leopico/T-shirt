@@ -99,7 +99,7 @@ const Home = () => {
       }}
     >
 
-      {/* {!localStorage.getItem("header") ? (
+      {!localStorage.getItem("header") ? (
         <div className="flex pt-10 w-[80%] mx-auto">
           <Link
             className="thankyoubtn text-black ml-auto"
@@ -119,7 +119,7 @@ const Home = () => {
             Log out
           </Link>
         </div>
-      )} */}
+      )}
 
       <div className="relative py-10 flex h-full w-full justify-center items-center">
         <center className="w-[90%] h-[600px]">
