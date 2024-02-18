@@ -142,7 +142,7 @@ const Home = () => {
             <img src={mouse} className="w-[600px] h-2/3" alt="logo" />
 
             {frontPrintStyle == "text" && (
-              <div className="absolute w-40 top-[50%] left-[43%] md:left-[45%] transform -translate-x-1/2 -translate-y-1/2">
+              <div className="absolute w-40 top-[50%] left-[43%] md:left-[47%] transform -translate-x-1/2 -translate-y-1/2">
                 <h1
                   className={`${frontText.print} text-white text-[40px] md:text-5xl`}>
                   {frontText.text}
@@ -159,7 +159,7 @@ const Home = () => {
                         ? frontAIImage.image.withBackground
                         : frontAIImage.image.noBackground
                     }
-                    className="absolute sm:w-[500px] sm:h-[380px] md:w-[490px] md:h-[390px] top-[50%] rounded-3xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
+                    className="absolute sm:w-[500px] sm:h-[380px] md:w-[480px] md:h-[390px] top-[50%] rounded-xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
                     alt="centered-logo"
                   />
                 </div>
@@ -183,10 +183,15 @@ const Home = () => {
                         )
                         : frontUploadImage.image.noBackground
                     }
-                    className="absolute sm:w-[500px] sm:h-[380px] md:w-[490px] md:h-[390px] top-[50%] rounded-3xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
+                    className="absolute sm:w-[500px] sm:h-[380px] md:w-[480px] md:h-[390px] top-[50%] rounded-xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
                     alt="centered-logo"
                   />
                 </div>
+                {frontLoading && (
+                  <h1 className="absolute w-24 text-yellow-500/85 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
+                    <TbFidgetSpinner size={50} className="animate-spin" />
+                  </h1>
+                )}
               </>
             )}
 

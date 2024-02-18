@@ -1,9 +1,10 @@
 import { Box, Modal, Slider, Button } from "@mui/material";
 import { useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
+import axios from "axios";
 
 const boxStyle = {
-    width: "500px",
+    width: "490px",
     height: "490px",
     display: "flex",
     flexFlow: "column",
@@ -23,23 +24,23 @@ const CropperAiModal = ({ src, modalOpen, setModalOpen, setFrontAiImage }) => {
     console.log(`url-img: ${src}`);
 
     const handleSave = async () => {
-    if (cropRef) {
-        const dataUrl = cropRef.current.getImage().toDataURL();
-        // console.log(`dataurl: ${dataUrl}`);
-        const result = await fetch(dataUrl);
-        const blob = await result.blob();
-        const aiImage = URL.createObjectURL(blob);
-        // console.log(`ai-image: ${aiImage}`);
-        setFrontAiImage((prevFrontAIImage) => ({
-            ...prevFrontAIImage,
-            image: {
-                withBackground: aiImage,
-            },
-        }));
-        setModalOpen(false);
-    }
-};
-
+        if (cropRef) {
+            const dataUrl = cropRef.current.getImage().toDataURL();
+            // console.log(`dataurl: ${dataUrl}`);
+            const result = await fetch(dataUrl);
+            const blob = await result.blob();
+            const aiImage = URL.createObjectURL(blob);
+            // console.log(`ai-image: ${aiImage}`);
+            setFrontAiImage((prevFrontAIImage) => ({
+                ...prevFrontAIImage,
+                image: {
+                    withBackground: aiImage,
+                },
+            }));
+            setModalOpen(false);
+        } 
+    };
+   
     return (
         <Modal sx={modalStyle} open={modalOpen}>
             <Box sx={boxStyle}>
@@ -100,7 +101,7 @@ const CropperAiModal = ({ src, modalOpen, setModalOpen, setFrontAiImage }) => {
                         cancel
                     </Button>
                     <Button
-                        sx={{ background: "#5596e6" }}
+                        sx={{ background: "cyan", color: "black" }}
                         size="small"
                         variant="contained"
                         onClick={handleSave}
@@ -111,6 +112,6 @@ const CropperAiModal = ({ src, modalOpen, setModalOpen, setFrontAiImage }) => {
             </Box>
         </Modal>
     );
-}
+};
 
 export default CropperAiModal
