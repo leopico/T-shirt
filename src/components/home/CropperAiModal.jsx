@@ -4,8 +4,8 @@ import AvatarEditor from "react-avatar-editor";
 import axios from "axios";
 
 const boxStyle = {
-    width: "490px",
-    height: "490px",
+    width: "350px",
+    height: "350px",
     display: "flex",
     flexFlow: "column",
     justifyContent: "center",
