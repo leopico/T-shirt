@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import ItemCard from "../components/home/items";
 import { TbFidgetSpinner } from "react-icons/tb";
 import axios from "axios";
+import "./css/home.css";
 
 const Home = () => {
   let [products, setProducts] = useState(null);
@@ -159,7 +160,7 @@ const Home = () => {
                         ? frontAIImage.image.withBackground
                         : frontAIImage.image.noBackground
                     }
-                    className="absolute sm:w-[500px] sm:h-[380px] md:w-[480px] md:h-[390px] top-[50%] rounded-xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
+                    className="responsive-image absolute sm:w-[500px] sm:h-[380px] md:w-[480px] md:h-[390px] top-[50%] rounded-xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
                     alt="centered-logo"
                   />
                 </div>
@@ -183,7 +184,8 @@ const Home = () => {
                         )
                         : frontUploadImage.image.noBackground
                     }
-                    className="absolute sm:w-[500px] sm:h-[380px] md:w-[480px] md:h-[390px] top-[50%] rounded-xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
+                    className="responsive-image absolute sm:w-[500px] sm:h-[380px] md:w-[480px] md:h-[390px]
+                     top-[50%] rounded-xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
                     alt="centered-logo"
                   />
                 </div>

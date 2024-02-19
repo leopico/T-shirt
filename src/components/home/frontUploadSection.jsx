@@ -54,6 +54,7 @@ function UploadSection({ setFrontUploadImage, frontUploadImage, setLoading }) {
         reader.readAsDataURL(res.data);
       })
       .catch((err) => {
+        alert("Can't remove for your image!")
         setLoading(false);
         console.log(err);
       });
