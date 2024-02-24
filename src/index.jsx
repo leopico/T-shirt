@@ -19,10 +19,10 @@ import NotFound from "./pages/notFound";
 import Footer from "./components/footer";
 
 const router = createBrowserRouter([
-  { path: "/", element: <FrontPage /> },
+  { path: "/", element:  <Home />},
   { path: "/product/:id", element: <ProductDetails /> },
 
-  { path: "/home", element: <Home />},
+  { path: "/home", element: <FrontPage />},
   { path: "/signin", element: <SignIn /> },
   { path: "/thankyou", element: <ThankYou /> },
   { path: "/order", element: <OrderPage2 /> },
