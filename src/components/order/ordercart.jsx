@@ -2,7 +2,7 @@ import Items from "./items";
 
 const Cart = ({ price }) => {
   return (
-    <div className="bgCol1 w-full px-5 py-3 border border-black rounded-lg px-5 py-3">
+    <div className="bgCol1 w-full px-5 py-3 border border-black rounded-lg">
       <h3 className="flex md:text-2xl text-xl myFont1">Order Summary</h3>
       <div className="w-full px-3 pt-4 md:text-lg text-md font-[400]">
         <div className="w-full flex justify-between md:text-xl text-lg myFont1">
