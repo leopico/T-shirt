@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import SelectFont from "./selectFont";
 
 import AiSection from "./frontAiSection";
 import UploadSection from "./frontUploadSection";
-// import { upload } from "@testing-library/user-event/dist/upload";
+import { textElements } from "../../constants/constant";
+import { Button } from "../ui/button";
+import Text from "../settings/Text";
+import Color from "../settings/Color";
+import { modifyShape } from "@/libs/shapes";
 
 function FrontPrintStyle({
   frontPrintStyle,
-  setFrontPrintStyle,
+  setFrontPrintStyle, //needed
   setLoading,
   frontText,
   setFrontText,
@@ -16,21 +19,28 @@ function FrontPrintStyle({
   setFrontAiImage,
   frontUploadImage,
   setFrontUploadImage,
+  //fabric
+  activeElement,
+  handleActiveElment,
+  elementAttributes,
+  setElementAttributes,
+  fabricRef,
+  isEditingRef,
 }) {
-  
-  const handlePrintText = (e) => {
-    const inputValue = e.target.value;
-    if (inputValue.length <= 7) {
-      setFrontText({
-        ...frontText,
-        text: inputValue,
-      });
-    } else {
-      setFrontText({
-        ...frontText,
-        text: inputValue.slice(0, 7),
-      });
-    }
+  const colorInputRef = useRef(null);
+  const strokeInputRef = useRef(null);
+
+  const isActive = (value) =>
+    (activeElement && activeElement.value === value);
+
+  const handleInputChange = (property, value) => {
+    if (!isEditingRef.current) isEditingRef.current = true;
+    setElementAttributes((prev) => ({ ...prev, [property]: value }));
+    modifyShape({
+      canvas: fabricRef.current,
+      property,
+      value,
+    });
   };
 
   return (
@@ -58,26 +68,60 @@ function FrontPrintStyle({
       </div>
 
       <div className="flex justify-between w-full border border-black">
-        <div className="w-full">
-
-          {frontPrintStyle == "text" && (
-            <div className="flex w-full">
-              <input
-                value={frontText.text}
-                placeholder="Enter text"
-                className="w-1/3 inpt bgCol2 px-2 focus:outline-none"
-                onChange={handlePrintText}
-              ></input>
-              <SelectFont
-                className="w-fit"
-                frontPrintStyle={frontPrintStyle}
-                frontText={frontText}
-                setFrontText={setFrontText}
-              />
+        <div className="w-full mx-1 md:mx-3">
+          {frontPrintStyle === "text" && (
+            <div className="flex w-full h-36 items-center justify-between">
+              <ul className="flex flex-col md:flex-row space-x-0 md:space-x-4">
+                {
+                  textElements.map((item) => (
+                    <li key={item.name}
+                      onClick={() => {
+                        if (Array.isArray(item.value)) return;
+                        handleActiveElment(item);
+                      }}
+                    >
+                      <button
+                        className={
+                          `w-8 md:w-12 h-8 md:h-12 bg-black hover:bg-black/85 rounded
+                        ${isActive(item.value) && "bg-black/85"}
+                      `}
+                      >
+                        <img
+                          src={item.icon}
+                          alt={item.name}
+                          className=" p-2 md:p-4 object-center"
+                        />
+                      </button>
+                    </li>
+                  ))
+                }
+              </ul>
+              <div className="md:mr-40">
+                <Text
+                  fontFamily={elementAttributes.fontFamily}
+                  fontSize={elementAttributes.fontSize}
+                  fontWeight={elementAttributes.fontWeight}
+                  handleInputChange={handleInputChange}
+                />
+              </div>
+              <div className="flex flex-col space-y-2">
+                <Color
+                  inputRef={colorInputRef}
+                  attribute={elementAttributes.fill}
+                  handleInputChange={handleInputChange}
+                  attributeType='fill'
+                />
+                <Color
+                  inputRef={strokeInputRef}
+                  attribute={elementAttributes.stroke}
+                  attributeType='stroke'
+                  handleInputChange={handleInputChange}
+                />
+              </div>
             </div>
           )}
 
-          {frontPrintStyle == "prompt" && (
+          {frontPrintStyle === "prompt" && (
             <AiSection
               frontAIImage={frontAIImage}
               setFrontAiImage={setFrontAiImage}

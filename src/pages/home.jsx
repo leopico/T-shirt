@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SelectSize from "../components/home/selectSize";
 import FrontPrintStyle from "../components/home/frontPrintStyle";
 import mouse from "../assets/mousepad.png";
@@ -8,6 +8,9 @@ import ItemCard from "../components/home/items";
 import { TbFidgetSpinner } from "react-icons/tb";
 import axios from "axios";
 import "./css/home.css";
+import { defaultTextElement } from "../constants/constant";
+import { handleCanvasMouseDown, handleCanvasMouseUp, handleCanvasSelectionCreated, handleCanvaseMouseMove, handleResize, initializeFabric } from "../libs/canvas";
+import { handleDelete } from "../libs/shapes";
 
 const Home = () => {
   let [products, setProducts] = useState(null);
@@ -43,7 +46,51 @@ const Home = () => {
     background: true,
   });
 
+  //fabric
+  const canvasRef = useRef(null);
+  const fabricRef = useRef(null);
+  const shapeRef = useRef(null);
+  const selectedShapeRef = useRef(null);
+  const imageInputRef = useRef(null);
+  const isEditingRef = useRef(false);
+
+  const [activeElement, setActiveElement] = useState(defaultTextElement);
+  const [elementAttributes, setElementAttributes] = useState({
+    width: "",
+    height: "",
+    fontSize: "",
+    fontFamily: "",
+    fontWeight: "",
+    fill: "#aabbcc",
+    stroke: "#aabbcc",
+  });
+
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+
+
+  const handleActiveElment = (elem) => {
+    setActiveElement(elem);
+
+    switch (elem.value) {
+      case 'reset':
+        fabricRef.current.clear();
+        setActiveElement(defaultTextElement);
+        break;
+
+      case "delete":
+        handleDelete(fabricRef.current);
+        setActiveElement(defaultTextElement);
+        break;
+
+      case "image":
+        imageInputRef.current.click();
+        break;
+
+      default:
+        selectedShapeRef.current = elem.value;
+        break;
+    }
+  };
 
   const createProduct = () => {
     // if (size && color && category) {
@@ -90,6 +137,61 @@ const Home = () => {
         console.error("Fetch error:", error);
       });
   }, []);
+
+  useEffect(() => {
+    const canvas = initializeFabric({ fabricRef, canvasRef });
+    // console.log("canvas initialized")
+
+    canvas.on("mouse:down", (options) => {
+      handleCanvasMouseDown({
+        options,
+        canvas,
+        shapeRef,
+        selectedShapeRef
+      });
+    });
+
+    canvas.on("mouse:move", (options) => {
+      handleCanvaseMouseMove({
+        options,
+        canvas,
+        shapeRef,
+        selectedShapeRef
+      });
+    });
+
+    canvas.on("mouse:up", () => {
+      handleCanvasMouseUp({
+        canvas,
+        shapeRef,
+        selectedShapeRef,
+        setActiveElement,
+      });
+    });
+
+    canvas.on("selection:created", (options) => {
+      handleCanvasSelectionCreated({
+        options,
+        isEditingRef,
+        setElementAttributes,
+      })
+    })
+
+    window.addEventListener("resize", () => {
+      handleResize({ fabricRef })
+    });
+
+    return () => {
+      canvas.dispose();
+
+      window.removeEventListener("resize", () => {
+        handleResize({
+          canvas: null,
+        });
+      });
+    }
+
+  }, [canvasRef]);
 
   return (
     <div
@@ -139,19 +241,17 @@ const Home = () => {
 
           <div className="relative border border-black">
             {/* Front image */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <img src={mouse} className="max-w-full max-h-full" alt="logo" />
+            </div>
 
-            <img src={mouse} className="w-[600px] h-2/3" alt="logo" />
-
-            {frontPrintStyle == "text" && (
-              <div className="absolute w-40 top-[50%] left-[43%] md:left-[47%] transform -translate-x-1/2 -translate-y-1/2">
-                <h1
-                  className={`${frontText.print} text-white text-[40px] md:text-5xl`}>
-                  {frontText.text}
-                </h1>
+            {frontPrintStyle === "text" && (
+              <div className="w-full h-96 lg:h-[550px]" id="canvas">
+                <canvas className="w-full h-full" ref={canvasRef} />
               </div>
             )}
 
-            {frontPrintStyle == "prompt" && (
+            {frontPrintStyle === "prompt" && (
               <>
                 <div className="w-[600px]">
                   <img
@@ -172,7 +272,7 @@ const Home = () => {
               </>
             )}
 
-            {frontPrintStyle == "upload" && (
+            {frontPrintStyle === "upload" && (
               <>
                 <div className="w-[600px]">
                   <img
@@ -198,6 +298,7 @@ const Home = () => {
             )}
 
           </div>
+
           {view == "front" && (
             <FrontPrintStyle
               frontPrintStyle={frontPrintStyle}
@@ -209,6 +310,13 @@ const Home = () => {
               setFrontAiImage={setFrontAiImage}
               frontUploadImage={frontUploadImage}
               setFrontUploadImage={setFrontUploadImage}
+              //fabric
+              activeElement={activeElement}
+              handleActiveElment={handleActiveElment}
+              elementAttributes={elementAttributes}
+              setElementAttributes={setElementAttributes}
+              fabricRef={fabricRef}
+              isEditingRef={isEditingRef}
             />
           )}
 
