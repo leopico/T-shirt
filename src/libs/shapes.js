@@ -51,32 +51,69 @@ export const handleImageUpload = ({
   reader.onload = () => {
     fabric.Image.fromURL(reader.result, (img) => {
       
-      img.scaleToWidth(400);
-      img.scaleToHeight(400);
+      img.scaleToWidth(300);
+      img.scaleToHeight(300);
 
       const clipPath = new fabric.Rect({
         width: img.width,
         height: img.height,
-        rx: 40,
-        ry: 40, 
+        rx: 60,
+        ry: 60, 
         originX: 'center',
         originY: 'center',
       });
 
       img.clipPath = clipPath;
      
-
       canvas.current.add(img);
 
       img.objectId = uuidv4();
 
       shapeRef.current = img;
 
-      canvas.current.requestRenderAll();
+      canvas.current.renderAll();
     });
   };
 
   reader.readAsDataURL(file);
+};
+
+export const handleAiImageUpload = async ({
+  src,
+  canvas,
+  shapeRef,
+}) => {
+  console.log(`src: ${src}, canvas: ${canvas}, shapeRef: ${shapeRef}`);
+
+  if (!src) {
+    alert("provide src...");
+    return;
+  }
+
+  fabric.Image.fromURL(src, (img) => {
+    img.scaleToWidth(300);
+    img.scaleToHeight(300);
+
+    const clipPath = new fabric.Rect({
+      width: img.width,
+      height: img.height,
+      rx: 60,
+      ry: 60,
+      originX: 'center',
+      originY: 'center',
+    });
+
+    img.clipPath = clipPath;
+
+    canvas.current.add(img);
+
+    img.objectId = uuidv4();
+
+    shapeRef.current = img;
+
+    canvas.current.renderAll();
+  });
+
 };
 
 export const modifyShape = ({

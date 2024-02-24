@@ -14,37 +14,9 @@ import { handleDelete } from "../libs/shapes";
 
 const Home = () => {
   let [products, setProducts] = useState(null);
-  let [view, setView] = useState("front");
   let [size, setSize] = useState("");
   let [frontPrintStyle, setFrontPrintStyle] = useState("text");
-  let [frontLoading, setFrontLoading] = useState(false);
-
-  // for Text
-  let [frontText, setFrontText] = useState({
-    text: "",
-    value: "printFont1 text-lg",
-    label: "Dingos",
-    print: "printFont1 text-lg",
-  });
-
-  // for AI generated Image
-  let [frontAIImage, setFrontAiImage] = useState({
-    prompt: null,
-    image: {
-      withBackground: null,
-      noBackground: null,
-    },
-    background: true,
-  });
-
-  // for Uploaded Image
-  let [frontUploadImage, setFrontUploadImage] = useState({
-    image: {
-      withBackground: null,
-      noBackground: null,
-    },
-    background: true,
-  });
+  let [loading, setLoading] = useState(false);
 
   //fabric
   const canvasRef = useRef(null);
@@ -244,27 +216,13 @@ const Home = () => {
             <div className="absolute inset-0 flex items-center justify-center">
               <img src={mouse} className="max-w-full max-h-full" alt="logo" />
             </div>
-
-            {frontPrintStyle === "text" && (
-              <div className="w-full h-96 lg:h-[550px]" id="canvas">
+            <div className="w-full h-96 lg:h-[550px]" id="canvas">
                 <canvas className="w-full h-full" ref={canvasRef} />
-              </div>
-            )}
+            </div>
 
             {frontPrintStyle === "prompt" && (
               <>
-                <div className="w-[600px]">
-                  <img
-                    src={
-                      frontAIImage.background
-                        ? frontAIImage.image.withBackground
-                        : frontAIImage.image.noBackground
-                    }
-                    className="responsive-image absolute sm:w-[500px] sm:h-[380px] md:w-[480px] md:h-[390px] top-[50%] rounded-xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
-                    alt="centered-logo"
-                  />
-                </div>
-                {frontLoading && (
+                {loading && (
                   <h1 className="absolute w-24 text-yellow-500/85 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
                     <TbFidgetSpinner size={50} className="animate-spin" />
                   </h1>
@@ -274,22 +232,7 @@ const Home = () => {
 
             {frontPrintStyle === "upload" && (
               <>
-                <div className="w-[600px]">
-                  <img
-                    src={
-                      frontUploadImage.background
-                        ? frontUploadImage.image.withBackground != null &&
-                        URL.createObjectURL(
-                          frontUploadImage.image.withBackground
-                        )
-                        : frontUploadImage.image.noBackground
-                    }
-                    className="responsive-image absolute sm:w-[500px] sm:h-[380px] md:w-[480px] md:h-[390px]
-                     top-[50%] rounded-xl left-[50%] transform -translate-x-1/2 -translate-y-1/2"
-                    alt="centered-logo"
-                  />
-                </div>
-                {frontLoading && (
+                {loading && (
                   <h1 className="absolute w-24 text-yellow-500/85 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
                     <TbFidgetSpinner size={50} className="animate-spin" />
                   </h1>
@@ -299,26 +242,21 @@ const Home = () => {
 
           </div>
 
-          {view == "front" && (
-            <FrontPrintStyle
-              frontPrintStyle={frontPrintStyle}
-              setFrontPrintStyle={setFrontPrintStyle}
-              setLoading={setFrontLoading}
-              frontText={frontText}
-              setFrontText={setFrontText}
-              frontAIImage={frontAIImage}
-              setFrontAiImage={setFrontAiImage}
-              frontUploadImage={frontUploadImage}
-              setFrontUploadImage={setFrontUploadImage}
-              //fabric
-              activeElement={activeElement}
-              handleActiveElment={handleActiveElment}
-              elementAttributes={elementAttributes}
-              setElementAttributes={setElementAttributes}
-              fabricRef={fabricRef}
-              isEditingRef={isEditingRef}
-            />
-          )}
+
+          <FrontPrintStyle
+            frontPrintStyle={frontPrintStyle}
+            setFrontPrintStyle={setFrontPrintStyle}
+            setLoading={setLoading}
+            activeElement={activeElement}
+            handleActiveElment={handleActiveElment}
+            elementAttributes={elementAttributes}
+            setElementAttributes={setElementAttributes}
+            fabricRef={fabricRef}
+            isEditingRef={isEditingRef}
+            imageInputRef={imageInputRef}
+            shapeRef={shapeRef}
+          />
+
 
           <div className="footer">
             <div className="wishlist flex items-center justify-center border border-r-black">Wishlist</div>
@@ -327,6 +265,7 @@ const Home = () => {
               Buy Now
             </button>
           </div>
+
         </center>
       </div>
       {/* bottom cards */}

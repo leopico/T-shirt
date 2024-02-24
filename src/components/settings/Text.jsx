@@ -35,7 +35,7 @@ const Text = ({
 }) => (
   <div className='flex flex-col gap-1 border-b border-primary-grey-200 px-5 py-1'>
     <h3 className='text-[10px] uppercase font-semibold'>Text Settings</h3>
-    <h3 className='text-[10px] font-semibold'>Play font-weight section if you did not see properly</h3>
+    <h3 className='text-[10px] font-semibold'>Play font-size section if you did not see properly</h3>
 
     <div className='flex flex-col gap-2'>
       {RenderSelect({

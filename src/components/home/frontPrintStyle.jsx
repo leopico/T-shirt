@@ -1,31 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import axios from "axios";
 
 import AiSection from "./frontAiSection";
 import UploadSection from "./frontUploadSection";
 import { textElements } from "../../constants/constant";
-import { Button } from "../ui/button";
 import Text from "../settings/Text";
 import Color from "../settings/Color";
 import { modifyShape } from "@/libs/shapes";
 
 function FrontPrintStyle({
   frontPrintStyle,
-  setFrontPrintStyle, //needed
+  setFrontPrintStyle,
   setLoading,
-  frontText,
-  setFrontText,
-  frontAIImage,
-  setFrontAiImage,
-  frontUploadImage,
-  setFrontUploadImage,
-  //fabric
   activeElement,
   handleActiveElment,
   elementAttributes,
   setElementAttributes,
   fabricRef,
   isEditingRef,
+  imageInputRef,
+  shapeRef,
 }) {
   const colorInputRef = useRef(null);
   const strokeInputRef = useRef(null);
@@ -123,17 +117,19 @@ function FrontPrintStyle({
 
           {frontPrintStyle === "prompt" && (
             <AiSection
-              frontAIImage={frontAIImage}
-              setFrontAiImage={setFrontAiImage}
               setLoading={setLoading}
+              fabricRef={fabricRef}
+              shapeRef={shapeRef}
             />
           )}
 
           {frontPrintStyle === "upload" && (
             <UploadSection
-              setFrontUploadImage={setFrontUploadImage}
-              frontUploadImage={frontUploadImage}
-              setLoading={setLoading}
+              handleActiveElment={handleActiveElment}
+              isActive={isActive}
+              imageInputRef={imageInputRef}
+              fabricRef={fabricRef}
+              shapeRef={shapeRef}
             />
           )}
         </div>

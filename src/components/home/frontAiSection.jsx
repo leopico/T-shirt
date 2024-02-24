@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FaArrowRightLong } from "react-icons/fa6";
-import CropperAiModal from "./CropperAiModal";
 import { v4 as uuidv4 } from "uuid";
+import { Button } from "../ui/button";
+import { handleAiImageUpload } from "@/libs/shapes";
 
-function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
+function AiSection({ setLoading, fabricRef, shapeRef }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const [src, setSrc] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
+  const [promptAiImage, setPromptAiImage] = useState(null);
 
   const generate = async () => {
     try {
       setLoading(true);
-      // console.log(`${frontAIImage.prompt}`);
+      // console.log(`promptAiImage: ${promptAiImage}`);
       const newUniqueId = uuidv4();
       await axios
         .post(
           `${apiUrl}/api/v1/product/generateAiImage`,
           {
-            "prompt": frontAIImage.prompt,
+            "prompt": promptAiImage,
             "uniqueId": newUniqueId,
           },
           {
@@ -27,15 +27,15 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
               Authorization: localStorage.getItem("header"),
             },
           }
-      );
+        );
       setTimeout(async () => {
-        // console.log(newUniqueId);
         await fetchImages(newUniqueId);
+        
         setLoading(false);
-        setModalOpen(true);
+        setPromptAiImage(null);
       }, 60000);
-
     } catch (error) {
+      setLoading(false);
       console.error("Error:", error);
     }
   };
@@ -43,39 +43,39 @@ function AiSection({ frontAIImage, setFrontAiImage, setLoading }) {
   const fetchImages = async (newUniqueId) => {
     try {
       const response = await axios.get(`${apiUrl}/api/v1/product/fetchImage/${newUniqueId}`);
-      // console.log(response.data.images[0]);
-      setSrc(response.data.images[0]);
+      // console.log(`response: ${response.data.image1}`);
+      const base64ImageData = await response.data.image1;
+      await handleAiImageUpload({ src: `data:image/png;base64, ${base64ImageData}`, canvas: fabricRef, shapeRef });
+      setSrc(`data:image/png;base64, ${base64ImageData}`);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   return (
-    <div className="flex">
-      <CropperAiModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        src={src}
-        setFrontAiImage={setFrontAiImage}
-      /> 
-      <textarea
-        placeholder="Enter your style prompt and let AI design your mouse pad... It will have taken 1 ~ 2 mins for generating image and you will get pixel perfect after you had cropped"
-        className="h-20 w-full bg-[#59575400] px-2 focus:outline-none resize-none placeholder:text-gray-500"
-        onChange={(e) =>
-          setFrontAiImage({ ...frontAIImage, prompt: e.target.value })
-        }
-      ></textarea>
-      <div className="w-[60px] flex items-center justify-center bgCol1 border border-l-black">
-        <button className="w-full h-1/2 text-2xl" onClick={generate}>
-          <FaArrowRightLong className="mx-auto pr-1 hover:pr-0 duration-100" />
-        </button>
+    <>
+      <div className="flex justify-between items-center h-28">
+        <div className="w-2/4 sm:w-3/4 h-full flex justify-center items-center">
+          <textarea
+            placeholder="Enter your style prompt and let AI design your mouse pad..."
+            className="h-20 w-full bg-[#59575400] focus:outline-none resize-none placeholder:text-gray-500"
+            onChange={(e) => setPromptAiImage(e.target.value)}
+          ></textarea>
+        </div>
+        <div className="w-2/4 sm:w-1/4 h-full flex items-center justify-center border-l border-black/55">
+          <Button className="bg-black" onClick={() => generate()}>generate</Button>
+        </div>
       </div>
-      <img
-        src={src}
-        alt="ai-generate"
-        className="w-1 h-1 object-cover bgCol1 hidden"
-      />
-    </div>
+      {
+        src && (
+          <img
+            src={src}
+            alt="ai-generate"
+            className="w-0 h-0 object-fill hidden"
+          />
+        )
+      }
+    </>
   );
 }
 
