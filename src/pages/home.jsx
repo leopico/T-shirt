@@ -255,7 +255,6 @@ const Home = () => {
             isEditingRef={isEditingRef}
             imageInputRef={imageInputRef}
             shapeRef={shapeRef}
-            loading={loading}
           />
 
 

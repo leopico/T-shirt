@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { bgRemove, handleAiImageUpload } from "@/libs/shapes";
 import CircleLoader from "react-spinners/CircleLoader";
 
-function AiSection({ setLoading, fabricRef, shapeRef, loading }) {
+function AiSection({ setLoading, fabricRef, shapeRef }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const [src, setSrc] = useState("");
@@ -90,14 +90,7 @@ function AiSection({ setLoading, fabricRef, shapeRef, loading }) {
             </div>
           </div>
           <div className="flex justify-center items-center h-full w-full">
-            {
-              loading ? (
-                <CircleLoader size={15} color="green" />
-              ) : (
-                <Button onClick={() => generate()}>Generate</Button>
-              )
-            }
-
+            <Button onClick={() => generate()}>Generate</Button>
           </div>
         </div>
       </div>
