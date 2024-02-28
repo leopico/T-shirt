@@ -11,6 +11,7 @@ import "./css/home.css";
 import { defaultTextElement } from "../constants/constant";
 import { handleCanvasMouseDown, handleCanvasMouseUp, handleCanvasSelectionCreated, handleCanvaseMouseMove, handleResize, initializeFabric } from "../libs/canvas";
 import { handleDelete } from "../libs/shapes";
+import Tshirt from "/assets/T-shirt.svg"
 
 const Home = () => {
   let [products, setProducts] = useState(null);
@@ -214,11 +215,14 @@ const Home = () => {
           <div className="relative border border-black">
             {/* Front image */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <img src={mouse} className="max-w-full max-h-full" alt="logo" />
+              <img src={Tshirt} className="max-w-full max-h-full" alt="logo" />
             </div>
             <div className="w-full h-96 lg:h-[550px]" id="canvas">
-                <canvas className="w-full h-full" ref={canvasRef} />
+              <canvas className="w-full h-full" ref={canvasRef} />
             </div>
+            {/* <div className="absolute top-0 left-0 z-30 bg-red-600 w-10 flex justify-center items-center">
+                <div>1</div>
+            </div> */}
 
             {frontPrintStyle === "prompt" && (
               <>

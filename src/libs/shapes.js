@@ -48,16 +48,16 @@ export const handleImageUpload = ({ file, canvas, shapeRef }) => {
       img.scaleToWidth(350);
       img.scaleToHeight(350);
 
-      const clipPath = new fabric.Rect({
-        width: img.width,
-        height: img.height,
-        rx: 60,
-        ry: 60,
-        originX: "center",
-        originY: "center",
-      });
+      // const clipPath = new fabric.Rect({
+      //   width: img.width,
+      //   height: img.height,
+      //   rx: 60,
+      //   ry: 60,
+      //   originX: "center",
+      //   originY: "center",
+      // });
 
-      img.clipPath = clipPath;
+      // img.clipPath = clipPath;
 
       canvas.current.add(img);
 
@@ -85,16 +85,16 @@ export const handleAiImageUpload = async ({ src, canvas, shapeRef }) => {
     img.scaleToWidth(350);
     img.scaleToHeight(350);
 
-    const clipPath = new fabric.Rect({
-      width: img.width,
-      height: img.height,
-      rx: 60,
-      ry: 60,
-      originX: "center",
-      originY: "center",
-    });
+    // const clipPath = new fabric.Rect({
+    //   width: img.width,
+    //   height: img.height,
+    //   rx: 60,
+    //   ry: 60,
+    //   originX: "center",
+    //   originY: "center",
+    // });
 
-    img.clipPath = clipPath;
+    // img.clipPath = clipPath;
 
     canvas.current.add(img);
 
@@ -142,16 +142,16 @@ export const bgRemove = async ({ fabricRef, shapeRef, setLoader }) => {
       img.scaleToWidth(350);
       img.scaleToHeight(350);
 
-      const clipPath = new fabric.Rect({
-        width: img.width,
-        height: img.height,
-        rx: 60,
-        ry: 60,
-        originX: "center",
-        originY: "center",
-      });
+      // const clipPath = new fabric.Rect({
+      //   width: img.width,
+      //   height: img.height,
+      //   rx: 60,
+      //   ry: 60,
+      //   originX: "center",
+      //   originY: "center",
+      // });
 
-      img.clipPath = clipPath;
+      // img.clipPath = clipPath;
 
       fabricRef.current.add(img);
 
