@@ -45,8 +45,8 @@ export const handleImageUpload = ({ file, canvas, shapeRef }) => {
 
   reader.onload = () => {
     fabric.Image.fromURL(reader.result, (img) => {
-      img.scaleToWidth(350);
-      img.scaleToHeight(350);
+      img.scaleToWidth(300);
+      img.scaleToHeight(300);
 
       // const clipPath = new fabric.Rect({
       //   width: img.width,
@@ -82,8 +82,8 @@ export const handleAiImageUpload = async ({ src, canvas, shapeRef }) => {
 
   try {
     fabric.Image.fromURL(src, (img) => {
-    img.scaleToWidth(350);
-    img.scaleToHeight(350);
+    img.scaleToWidth(300);
+    img.scaleToHeight(300);
 
     // const clipPath = new fabric.Rect({
     //   width: img.width,
@@ -139,8 +139,8 @@ export const bgRemove = async ({ fabricRef, shapeRef, setLoader }) => {
     const imageURL = URL.createObjectURL(res.data);
     // console.log(`imageURL: ${imageURL}`);
     fabric.Image.fromURL(imageURL, (img) => {
-      img.scaleToWidth(350);
-      img.scaleToHeight(350);
+      img.scaleToWidth(300);
+      img.scaleToHeight(300);
 
       // const clipPath = new fabric.Rect({
       //   width: img.width,

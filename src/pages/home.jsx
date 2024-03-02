@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import SelectSize from "../components/home/selectSize";
 import FrontPrintStyle from "../components/home/frontPrintStyle";
-import mouse from "../assets/mousepad.png";
 import grid from "../assets/background.png";
 import { Link } from "react-router-dom";
 import ItemCard from "../components/home/items";
@@ -10,14 +9,26 @@ import axios from "axios";
 import "./css/home.css";
 import { defaultTextElement } from "../constants/constant";
 import { handleCanvasMouseDown, handleCanvasMouseUp, handleCanvasSelectionCreated, handleCanvaseMouseMove, handleResize, initializeFabric } from "../libs/canvas";
-import { handleDelete } from "../libs/shapes";
-import Tshirt from "/assets/T-shirt.svg"
+import { handleAiImageUpload, handleDelete } from "../libs/shapes";
+import Tshirt from "/assets/T-shirtb.png";
+import { Transition } from "@headlessui/react";
+import Sticker1 from "/assets/sticker1.png";
+import Sticker2 from "/assets/sticker2.png";
+import Sticker3 from "/assets/sticker3.png";
+import SelectColor from "@/components/home/SelectColor";
+
+
 
 const Home = () => {
   let [products, setProducts] = useState(null);
   let [size, setSize] = useState("");
   let [frontPrintStyle, setFrontPrintStyle] = useState("text");
-  let [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [drawer, setDrawer] = useState(false);
+  const [color, setColor] = useState("");
+  const [category, setCategory] = useState("");
+  const [src, setSrc] = useState([]);
+  console.log(`src: ${src}`)
 
   //fabric
   const canvasRef = useRef(null);
@@ -166,9 +177,21 @@ const Home = () => {
 
   }, [canvasRef]);
 
+  const handleDrawer = () => {
+    setDrawer((pre) => !pre);
+  };
+
+  const handleImageCLick = async (imageSrc) => {
+    // console.log(`Clicked imageSrc:`, imageSrc);
+    await handleAiImageUpload({ src: imageSrc, canvas: fabricRef, shapeRef });
+    if (drawer) {
+      setDrawer((pre) => !pre);
+    };
+  };
+
   return (
     <div
-      className="pb-28 sm:pb-56"
+      className="pb-28"
       style={{
         backgroundImage: `url(${grid})`,
         backgroundSize: "cover",
@@ -197,81 +220,163 @@ const Home = () => {
         </div>
       )}
 
-      <div className="relative py-10 flex h-full w-full justify-center items-center">
-        <center className="w-[90%] h-[600px]">
+      <div className="relative h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-0 py-10 w-[95%] mx-auto">
 
-          <div className="bgCol1 flex w-full justify-between items-center border border-black">
-            <div className="px-1 md:px-7 lg:px-16 py-2 md:py-4 border border-r-black">
+        <div className="hidden lg:flex flex-col items-center justify-between mx-auto bgCol1 h-full w-full border border-black">
+          <div className="myFont w-full min-h-[60px] bgCol1 border border-b-black flex items-center justify-center">
+            Ai Images
+          </div>
+          {
+            src && src.length > 0 ? (
+              <div className="flex flex-col items-center justify-between space-y-3 pl-2 mx-auto overflow-y-auto max-h-[750px]">
+                {
+                  src.map((imageSrc, index) => (
+                    <img
+                      className="h-[200px] cursor-pointer"
+                      src={imageSrc}
+                      key={index}
+                      alt={`image - ${index + 1}`}
+                      onClick={() => handleImageCLick(imageSrc)}
+                    />
+                  ))
+                }
+              </div>
+            ) : (
+              <h1 className="w-full h-full flex items-center justify-center myFont2 font-extrabold text-lg text-center">
+                Generate ai-images
+              </h1>
+            )
+          }
+        </div>
+
+        <div className="col-span-4 flex items-center justify-center h-full relative">
+
+          <Transition
+            show={drawer}
+            enter="transition-opacity duration-700"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-700"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            {(ref) => (
+              <div ref={ref} className="absolute top-0 left-0 h-full w-56 md:w-64 z-30 bgCol1 shadow-md">
+                <div onClick={handleDrawer}
+                  className="p-1 sm:p-2 lg:p-0 flex justify-between items-center">
+                  <span className="text-[10px] sm:text-[16px] myFont">Ai Images</span>
+                  <img src="/assets/close.svg" className="w-8 h-8 sm:w-12 sm:h-12 hover:scale-105 hover:opacity-85 cursor-pointer" alt="close" />
+                </div>
+                <div className="flex flex-col space-y-2 overflow-y-auto">
+                  <div className="flex flex-col items-center justify-between space-y-3 mx-auto overflow-y-auto max-h-[550px]">
+                    {
+                      src && src.length > 0 && (
+                        src.map((imageSrc, index) => (
+                          <img
+                            className="h-[200px] cursor-pointer"
+                            src={imageSrc}
+                            alt={`image - ${index + 1}`}
+                            onClick={() => handleImageCLick(imageSrc)}
+                          />
+                        ))
+                      )
+                    }
+                  </div>
+                </div>
+              </div>
+            )}
+          </Transition>
+
+          <div className="flex flex-col justify-center items-center w-full border border-black">
+
+            <div className="bgCol1 flex w-full justify-between items-center border px-3 md:px-0 border-b-black h-[60px]">
               <SelectSize setSize={setSize} />
+              <SelectColor color={color} setColor={setColor} />
+              <div className="box">
+                <select
+                  className="myFont text-[14px] bgCol1 cursor-pointer w-3 sm:w-auto"
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option disabled selected>
+                    Category
+                  </option>
+                  <option value="sweatshirt">Sweatshirt</option>
+                  <option value="tshirt">T-shirt</option>
+                </select>
+              </div>
             </div>
-            <div className="">
-              <h1 className="myFont text-xs md:text-lg lg:text-2xl">By hoodiny studios</h1>
+
+            <div className="relative">
+              {/* Front image */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img src={Tshirt} className="max-w-full max-h-full" alt="logo" />
+              </div>
+              <div className="w-full h-96 lg:h-[550px]" id="canvas">
+                <canvas className="w-full h-full" ref={canvasRef} />
+              </div>
+
+              <div onClick={handleDrawer}
+                className="absolute transition-transform duration-300 ease-in-out top-1 sm:top-2 sm:left-2 left-1 lg:hidden z-20 w-10 flex justify-center items-center hover:scale-105 cursor-pointer">
+                <img src="/assets/settings.png" alt="setting" />
+              </div>
+
+              {frontPrintStyle === "prompt" && loading && (
+                <h1 className="absolute w-24 text-yellow-500/85 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[52%] transform -translate-x-1/2 -translate-y-1/2">
+                  <TbFidgetSpinner size={50} className="animate-spin" />
+                </h1>
+              )}
+
+              {frontPrintStyle === "upload" && loading && (
+                <h1 className="absolute w-24 text-yellow-500/85 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[52%] transform -translate-x-1/2 -translate-y-1/2">
+                  <TbFidgetSpinner size={50} className="animate-spin" />
+                </h1>
+              )}
+
             </div>
-            <div className="px-1 md:px-7 lg:px-16 py-3 md:py-5 border border-l-black text-xs">
-              <h1 className="myFont">stickers</h1>
+
+            <FrontPrintStyle
+              frontPrintStyle={frontPrintStyle}
+              setFrontPrintStyle={setFrontPrintStyle}
+              setLoading={setLoading}
+              activeElement={activeElement}
+              handleActiveElment={handleActiveElment}
+              elementAttributes={elementAttributes}
+              setElementAttributes={setElementAttributes}
+              fabricRef={fabricRef}
+              isEditingRef={isEditingRef}
+              imageInputRef={imageInputRef}
+              shapeRef={shapeRef}
+              src={src}
+              setSrc={setSrc}
+            />
+
+            <div className="footer w-full">
+              <div className="wishlist flex items-center justify-center border border-t-black border-r-black">Wishlist</div>
+              <div className="price border border-t-black">Rs 648.00</div>
+              <button className="paydbtn" onClick={createProduct}>
+                Buy Now
+              </button>
             </div>
+
           </div>
+        </div>
 
-          <div className="relative border border-black">
-            {/* Front image */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img src={Tshirt} className="max-w-full max-h-full" alt="logo" />
-            </div>
-            <div className="w-full h-96 lg:h-[550px]" id="canvas">
-              <canvas className="w-full h-full" ref={canvasRef} />
-            </div>
-            {/* <div className="absolute top-0 left-0 z-30 bg-red-600 w-10 flex justify-center items-center">
-                <div>1</div>
-            </div> */}
-
-            {frontPrintStyle === "prompt" && (
-              <>
-                {loading && (
-                  <h1 className="absolute w-24 text-yellow-500/85 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
-                    <TbFidgetSpinner size={50} className="animate-spin" />
-                  </h1>
-                )}
-              </>
-            )}
-
-            {frontPrintStyle === "upload" && (
-              <>
-                {loading && (
-                  <h1 className="absolute w-24 text-yellow-500/85 text-lg sm:text-2xl md:text-4xl font-bold top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2">
-                    <TbFidgetSpinner size={50} className="animate-spin" />
-                  </h1>
-                )}
-              </>
-            )}
-
+        <div className="hidden lg:flex flex-col items-center justify-center mx-auto bgCol1 h-full border border-black">
+          <span className="myFont h-[39px] w-full bgCol1 border border-b-black text-center">
+            Stickers
+          </span>
+          <div className="flex flex-col items-center justify-between space-y-3 pl-2 mx-auto overflow-y-auto max-h-[750px]">
+            <img className="h-[200px]" src={Sticker1} alt="ai-image1" />
+            <img className="h-[200px]" src={Sticker2} alt="ai-image2" />
+            <img className="h-[200px]" src={Sticker3} alt="ai-image3" />
+            <img className="h-[200px]" src={Sticker1} alt="ai-image3" />
           </div>
+        </div>
 
-
-          <FrontPrintStyle
-            frontPrintStyle={frontPrintStyle}
-            setFrontPrintStyle={setFrontPrintStyle}
-            setLoading={setLoading}
-            activeElement={activeElement}
-            handleActiveElment={handleActiveElment}
-            elementAttributes={elementAttributes}
-            setElementAttributes={setElementAttributes}
-            fabricRef={fabricRef}
-            isEditingRef={isEditingRef}
-            imageInputRef={imageInputRef}
-            shapeRef={shapeRef}
-          />
-
-
-          <div className="footer">
-            <div className="wishlist flex items-center justify-center border border-r-black">Wishlist</div>
-            <div className="price">Rs 648.00</div>
-            <button className="paydbtn" onClick={createProduct}>
-              Buy Now
-            </button>
-          </div>
-
-        </center>
       </div>
+
+
+
       {/* bottom cards */}
       {/* <div className="sm:pt-10 md:pt-36">
         <h3 className="mt-16 mb-5 myFont text-xl text-center">Pre-designed</h3>

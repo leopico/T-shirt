@@ -20,6 +20,8 @@ function FrontPrintStyle({
   isEditingRef,
   imageInputRef,
   shapeRef,
+  src,
+  setSrc,
 }) {
   const colorInputRef = useRef(null);
   const strokeInputRef = useRef(null);
@@ -41,7 +43,7 @@ function FrontPrintStyle({
     <>
       {/* print options */}
       <div className="flex justify-center space-x-4 p-2 myFont border
-       border-black/10 bg-[#E2DBD1] text-sm">
+       border-t-black border-b-black bg-[#E2DBD1] text-sm w-full">
         <button
           className={`${frontPrintStyle == "text" ? "underline" : ""}`}
           onClick={() => setFrontPrintStyle("text")}
@@ -62,7 +64,7 @@ function FrontPrintStyle({
         </button>
       </div>
 
-      <div className="flex justify-between w-full border border-black">
+      <div className="flex justify-between w-full">
         <div className="w-full">
           {frontPrintStyle === "text" && (
             <div className="flex w-full h-36 items-center justify-between px-1 md:px-3">
@@ -121,6 +123,8 @@ function FrontPrintStyle({
               setLoading={setLoading}
               fabricRef={fabricRef}
               shapeRef={shapeRef}
+              src={src}
+              setSrc={setSrc}
             />
           )}
 

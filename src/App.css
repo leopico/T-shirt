@@ -79,7 +79,6 @@
 
 .footer{
   display: flex;
-  border: 1px solid black;
 }
 .inpt{
   height: 40px;

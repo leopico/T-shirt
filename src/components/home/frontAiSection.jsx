@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "../ui/button";
-import { bgRemove, handleAiImageUpload } from "@/libs/shapes";
+import { bgRemove } from "@/libs/shapes";
 import CircleLoader from "react-spinners/CircleLoader";
 
-function AiSection({ setLoading, fabricRef, shapeRef }) {
+function AiSection({ setLoading, fabricRef, shapeRef, src, setSrc }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
-  const [src, setSrc] = useState("");
   const [promptAiImage, setPromptAiImage] = useState(null);
   const [loader, setLoader] = useState(false);
 
@@ -32,9 +31,7 @@ function AiSection({ setLoading, fabricRef, shapeRef }) {
         );
       setTimeout(async () => {
         await fetchImages(newUniqueId);
-
         setLoading(false);
-        setPromptAiImage(null);
       }, 60000);
     } catch (error) {
       setLoading(false);
@@ -46,9 +43,9 @@ function AiSection({ setLoading, fabricRef, shapeRef }) {
     try {
       const response = await axios.get(`${apiUrl}/api/v1/product/fetchImage/${newUniqueId}`);
       // console.log(`response: ${response.data.image1}`);
-      const base64ImageData = await response.data.image1;
-      await handleAiImageUpload({ src: `data:image/png;base64, ${base64ImageData}`, canvas: fabricRef, shapeRef });
-      setSrc(`data:image/png;base64, ${base64ImageData}`);
+      const base64ImageData = await response.data;
+      const modifiedSrc = Object.values(base64ImageData).map(imageData => `data:image/png;base64,${imageData}`);
+      setSrc(modifiedSrc);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -57,6 +54,7 @@ function AiSection({ setLoading, fabricRef, shapeRef }) {
   const handleRemoveBg = async () => {
     await bgRemove({ fabricRef, shapeRef, setLoader });
   };
+
 
   return (
     <>
@@ -94,15 +92,6 @@ function AiSection({ setLoading, fabricRef, shapeRef }) {
           </div>
         </div>
       </div>
-      {
-        src && (
-          <img
-            src={src}
-            alt="ai-generate"
-            className="w-0 h-0 object-fill hidden"
-          />
-        )
-      }
     </>
   );
 }

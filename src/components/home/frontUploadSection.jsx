@@ -17,7 +17,7 @@ function UploadSection({
   }
 
   return (
-    <div className="flex h-20 md:h-28 items-center justify-center space-x-4">
+    <div className="flex h-36 items-center justify-center space-x-4">
       <ul className="flex space-x-2 md:space-x-4">
         {
           imageElements.map((item) => (
