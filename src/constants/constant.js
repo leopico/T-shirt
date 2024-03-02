@@ -127,3 +127,64 @@ export const fontWeightOptions = [
   },
 ];
 
+export const tshirtImages = [
+  {
+    color: "mercury",
+    colorCode: "#E6E4E5",
+    fImage: "/assets/Fshirt1.png",
+    bImage: "/assets/Bshirt1.png"
+  },
+  {
+    color: "khaki",
+    colorCode: "#BBA576",
+    fImage: "/assets/Fshirt2.png",
+    bImage: "/assets/Bshirt2.png"
+  },
+  {
+    color: "amethyst",
+    colorCode: "#9E68C6",
+    fImage: "/assets/Fshirt3.png",
+    bImage: "/assets/Bshirt3.png"
+  },
+  {
+    color: "coffeebean",
+    colorCode: "#26110D",
+    fImage: "/assets/Fshirt4.png",
+    bImage: "/assets/Bshirt4.png"
+  },
+  {
+    color: "shamrockgreen",
+    colorCode: "#039A58",
+    fImage: "/assets/Fshirt5.png",
+    bImage: "/assets/Bshirt5.png"
+  },
+  {
+    color: "classicrose",
+    colorCode: "#F8CDD5",
+    fImage: "/assets/Fshirt6.png",
+    bImage: "/assets/Bshirt6.png"
+  },
+  {
+    color: "onyx",
+    colorCode: "#111111",
+    fImage: "/assets/Fshirt7.png",
+    bImage: "/assets/Bshirt7.png"
+  },
+  {
+    color: "azul",
+    colorCode: "#095BE5",
+    fImage: "/assets/Fshirt8.png",
+    bImage: "/assets/Bshirt8.png"
+  }
+];
+
+export const defaultTshirt = [
+  {
+    color: "classicrose",
+    colorCode: "#F8CDD5",
+    fImage: "/assets/Fshirt6.png",
+    bImage: "/assets/Bshirt6.png"
+  },
+]
+
+

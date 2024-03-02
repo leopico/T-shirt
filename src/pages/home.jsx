@@ -7,28 +7,30 @@ import ItemCard from "../components/home/items";
 import { TbFidgetSpinner } from "react-icons/tb";
 import axios from "axios";
 import "./css/home.css";
-import { defaultTextElement } from "../constants/constant";
+import { defaultTextElement, defaultTshirt, tshirtImages } from "../constants/constant";
 import { handleCanvasMouseDown, handleCanvasMouseUp, handleCanvasSelectionCreated, handleCanvaseMouseMove, handleResize, initializeFabric } from "../libs/canvas";
 import { handleAiImageUpload, handleDelete } from "../libs/shapes";
-import Tshirt from "/assets/T-shirtb.png";
+import Tshirt from "/assets/Fshirt6.png";
 import { Transition } from "@headlessui/react";
 import Sticker1 from "/assets/sticker1.png";
 import Sticker2 from "/assets/sticker2.png";
 import Sticker3 from "/assets/sticker3.png";
 import SelectColor from "@/components/home/SelectColor";
+import SelectView from "@/components/home/selectView";
 
 
 
 const Home = () => {
   let [products, setProducts] = useState(null);
   let [size, setSize] = useState("");
+  let [view, setView] = useState("front");
+  let [showView, setShowView] = useState(false);
   let [frontPrintStyle, setFrontPrintStyle] = useState("text");
   const [loading, setLoading] = useState(false);
   const [drawer, setDrawer] = useState(false);
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState(defaultTshirt[0].color);
   const [category, setCategory] = useState("");
   const [src, setSrc] = useState([]);
-  console.log(`src: ${src}`)
 
   //fabric
   const canvasRef = useRef(null);
@@ -189,6 +191,12 @@ const Home = () => {
     };
   };
 
+  const handleColorClick = (clickedColor) => {
+    setColor(clickedColor);
+  };
+
+  const selectedImage = tshirtImages.find((tshirt) => tshirt.color === color) || defaultTshirt[0];
+
   return (
     <div
       className="pb-28"
@@ -291,7 +299,7 @@ const Home = () => {
 
             <div className="bgCol1 flex w-full justify-between items-center border px-3 md:px-0 border-b-black h-[60px]">
               <SelectSize setSize={setSize} />
-              <SelectColor color={color} setColor={setColor} />
+              <SelectColor color={color} handleColorClick={handleColorClick} />
               <div className="box">
                 <select
                   className="myFont text-[14px] bgCol1 cursor-pointer w-3 sm:w-auto"
@@ -309,8 +317,18 @@ const Home = () => {
             <div className="relative">
               {/* Front image */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <img src={Tshirt} className="max-w-full max-h-full" alt="logo" />
+                {
+                  view === "front" && (
+                    <img src={selectedImage.fImage} className="max-w-full max-h-full" alt="Tshirt-F" />
+                  )
+                }
+                {
+                  view === "back" && (
+                    <img src={selectedImage.bImage} className="max-w-full max-h-full" alt="Tshit-B" />
+                  )
+                }
               </div>
+
               <div className="w-full h-96 lg:h-[550px]" id="canvas">
                 <canvas className="w-full h-full" ref={canvasRef} />
               </div>
@@ -318,6 +336,18 @@ const Home = () => {
               <div onClick={handleDrawer}
                 className="absolute transition-transform duration-300 ease-in-out top-1 sm:top-2 sm:left-2 left-1 lg:hidden z-20 w-10 flex justify-center items-center hover:scale-105 cursor-pointer">
                 <img src="/assets/settings.png" alt="setting" />
+              </div>
+
+              <div
+                className="absolute transition-transform duration-300 
+                ease-in-out top-1 sm:top-2 right-1 sm:right-2 z-20 w-20 shadow-xl
+                flex justify-center items-center hover:scale-105 cursor-pointer">
+                <SelectView
+                  view={view}
+                  setView={setView}
+                  showView={showView}
+                  setShowView={setShowView}
+                />
               </div>
 
               {frontPrintStyle === "prompt" && loading && (
