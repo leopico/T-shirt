@@ -20,8 +20,8 @@ function FrontPrintStyle({
   isEditingRef,
   imageInputRef,
   shapeRef,
-  src,
   setSrc,
+  handleDrawer
 }) {
   const colorInputRef = useRef(null);
   const strokeInputRef = useRef(null);
@@ -123,8 +123,8 @@ function FrontPrintStyle({
               setLoading={setLoading}
               fabricRef={fabricRef}
               shapeRef={shapeRef}
-              src={src}
               setSrc={setSrc}
+              handleDrawer={handleDrawer}
             />
           )}
 

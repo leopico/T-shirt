@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { bgRemove } from "@/libs/shapes";
 import CircleLoader from "react-spinners/CircleLoader";
 
-function AiSection({ setLoading, fabricRef, shapeRef, src, setSrc }) {
+function AiSection({ setLoading, fabricRef, shapeRef, setSrc, handleDrawer }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const [promptAiImage, setPromptAiImage] = useState(null);
@@ -33,6 +33,10 @@ function AiSection({ setLoading, fabricRef, shapeRef, src, setSrc }) {
         await fetchImages(newUniqueId);
         setLoading(false);
       }, 60000);
+
+      if (window.innerWidth <= 768) {
+        handleDrawer();
+      }
     } catch (error) {
       setLoading(false);
       console.error("Error:", error);

@@ -8,7 +8,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import axios from "axios";
 import "./css/home.css";
 import { defaultTextElement, defaultTshirt, tshirtImages } from "../constants/constant";
-import { handleCanvasMouseDown, handleCanvasMouseUp, handleCanvasSelectionCreated, handleCanvaseMouseMove, handleResize, initializeFabric } from "../libs/canvas";
+import { handleCanvasMouseDown, handleCanvasMouseUp, handleCanvasSelectionCreated, handleCanvaseMouseMove, handleResize, initializeBackFabric, initializeFabric } from "../libs/canvas";
 import { handleAiImageUpload, handleDelete } from "../libs/shapes";
 import Tshirt from "/assets/Fshirt6.png";
 import { Transition } from "@headlessui/react";
@@ -17,22 +17,26 @@ import Sticker2 from "/assets/sticker2.png";
 import Sticker3 from "/assets/sticker3.png";
 import SelectColor from "@/components/home/SelectColor";
 import SelectView from "@/components/home/selectView";
+import PreviewBtn from "../components/home/PreviewBtn";
 
-
+const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 const Home = () => {
   let [products, setProducts] = useState(null);
   let [size, setSize] = useState("");
   let [view, setView] = useState("front");
   let [showView, setShowView] = useState(false);
-  let [frontPrintStyle, setFrontPrintStyle] = useState("text");
+  const [frontPrintStyle, setFrontPrintStyle] = useState("text");
+
+
+
   const [loading, setLoading] = useState(false);
   const [drawer, setDrawer] = useState(false);
-  const [color, setColor] = useState(defaultTshirt[0].color);
+  const [color, setColor] = useState(defaultTshirt[0]);
   const [category, setCategory] = useState("");
   const [src, setSrc] = useState([]);
 
-  //fabric
+  //front view canvas
   const canvasRef = useRef(null);
   const fabricRef = useRef(null);
   const shapeRef = useRef(null);
@@ -51,8 +55,13 @@ const Home = () => {
     stroke: "#aabbcc",
   });
 
-  const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
-
+  //back view canvas
+  const backCanvasRef = useRef(null);
+  const backFabricRef = useRef(null);
+  const backShapeRef = useRef(null);
+  const backSelectedShapeRef = useRef(null);
+  const backImageInputRef = useRef(null);
+  const backIsEditingRef = useRef(null);
 
   const handleActiveElment = (elem) => {
     setActiveElement(elem);
@@ -108,25 +117,27 @@ const Home = () => {
     // alert("create product")
   };
 
-  useEffect(() => {
-    axios
-      .get(`${apiUrl}/api/v1/product/get`, {
-        headers: {
-          Authorization: localStorage.getItem("header"),
-        },
-      })
-      .then((data) => {
-        // console.log("Data:", data);
-        setProducts(data.data.products);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${apiUrl}/api/v1/product/get`, {
+  //       headers: {
+  //         Authorization: localStorage.getItem("header"),
+  //       },
+  //     })
+  //     .then((data) => {
+  //       // console.log("Data:", data);
+  //       setProducts(data.data.products);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Fetch error:", error);
+  //     });
+  // }, []);
+
+
 
   useEffect(() => {
     const canvas = initializeFabric({ fabricRef, canvasRef });
-    // console.log("canvas initialized")
+    console.log("front canvas initialized");
 
     canvas.on("mouse:down", (options) => {
       handleCanvasMouseDown({
@@ -177,7 +188,15 @@ const Home = () => {
       });
     }
 
-  }, [canvasRef]);
+  }, [canvasRef, view]);
+
+  useEffect(() => {
+    const backcanvas = initializeBackFabric({ backFabricRef, backCanvasRef });
+    console.log("back canvas initialized");
+    return () => {
+      backcanvas.dispose();
+    }
+  }, [backCanvasRef, view])
 
   const handleDrawer = () => {
     setDrawer((pre) => !pre);
@@ -268,31 +287,33 @@ const Home = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            {(ref) => (
-              <div ref={ref} className="absolute top-0 left-0 h-full w-56 md:w-64 z-30 bgCol1 shadow-md">
-                <div onClick={handleDrawer}
-                  className="p-1 sm:p-2 lg:p-0 flex justify-between items-center">
-                  <span className="text-[10px] sm:text-[16px] myFont">Ai Images</span>
-                  <img src="/assets/close.svg" className="w-8 h-8 sm:w-12 sm:h-12 hover:scale-105 hover:opacity-85 cursor-pointer" alt="close" />
-                </div>
-                <div className="flex flex-col space-y-2 overflow-y-auto">
-                  <div className="flex flex-col items-center justify-between space-y-3 mx-auto overflow-y-auto max-h-[550px]">
-                    {
-                      src && src.length > 0 && (
-                        src.map((imageSrc, index) => (
-                          <img
-                            className="h-[200px] cursor-pointer"
-                            src={imageSrc}
-                            alt={`image - ${index + 1}`}
-                            onClick={() => handleImageCLick(imageSrc)}
-                          />
-                        ))
-                      )
-                    }
-                  </div>
+            <div className="absolute top-0 left-0 h-full w-56 md:w-64 z-30 bgCol1 shadow-md">
+              <div onClick={handleDrawer}
+                className="p-1 sm:p-2 lg:p-0 flex justify-between items-center">
+                <span className="text-[10px] sm:text-[16px] myFont">Ai Images</span>
+                <img src="/assets/close.svg" className="w-8 h-8 sm:w-12 sm:h-12 hover:scale-105 hover:opacity-85 cursor-pointer" alt="close" />
+              </div>
+              <div className="flex flex-col space-y-2 overflow-y-auto">
+                <div className="flex flex-col items-center justify-between space-y-3 mx-auto overflow-y-auto max-h-[550px]">
+                  {
+                    src && src.length > 0 ? (
+                      src.map((imageSrc, index) => (
+                        <img
+                          className="h-[200px] cursor-pointer"
+                          src={imageSrc}
+                          alt={`image - ${index + 1}`}
+                          onClick={() => handleImageCLick(imageSrc)}
+                        />
+                      ))
+                    ) : (
+                        <div className="p-10 mt-40">
+                          <TbFidgetSpinner size={50} className="animate-spin" />
+                        </div>
+                    )
+                  }
                 </div>
               </div>
-            )}
+            </div>
           </Transition>
 
           <div className="flex flex-col justify-center items-center w-full border border-black">
@@ -316,22 +337,37 @@ const Home = () => {
 
             <div className="relative">
               {/* Front image */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                {
-                  view === "front" && (
-                    <img src={selectedImage.fImage} className="max-w-full max-h-full" alt="Tshirt-F" />
-                  )
-                }
-                {
-                  view === "back" && (
-                    <img src={selectedImage.bImage} className="max-w-full max-h-full" alt="Tshit-B" />
-                  )
-                }
-              </div>
+              {
+                view === "front" && (
+                  <div id="front-capture">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <img src={selectedImage.fImage} className="max-w-full max-h-full" alt="Tshirt-F" />
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-32 h-44 sm:w-40 sm:h-56 lg:w-56 lg:h-80 border-red-600 border-4"></div>
+                    </div>
+                    <div className="w-full h-96 lg:h-[550px]" id="canvas">
+                      <canvas className="h-full w-full" ref={canvasRef} />
+                    </div>
+                  </div>
+                )
+              }
 
-              <div className="w-full h-96 lg:h-[550px]" id="canvas">
-                <canvas className="w-full h-full" ref={canvasRef} />
-              </div>
+              {
+                view === "back" && (
+                  <div id="back-capture">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <img src={selectedImage.bImage} className="max-w-full max-h-full" alt="Tshirt-F" />
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-32 h-40 sm:w-40 sm:h-56 lg:w-[190px] lg:h-80 border-[#0AC2FF] border-4"></div>
+                    </div>
+                    <div className="w-full h-96 lg:h-[550px] " id="back-canvas">
+                      <canvas className="w-full h-full" ref={backCanvasRef} />
+                    </div>
+                  </div>
+                )
+              }
 
               <div onClick={handleDrawer}
                 className="absolute transition-transform duration-300 ease-in-out top-1 sm:top-2 sm:left-2 left-1 lg:hidden z-20 w-10 flex justify-center items-center hover:scale-105 cursor-pointer">
@@ -378,16 +414,14 @@ const Home = () => {
               shapeRef={shapeRef}
               src={src}
               setSrc={setSrc}
+              handleDrawer={handleDrawer}
             />
 
             <div className="footer w-full">
               <div className="wishlist flex items-center justify-center border border-t-black border-r-black">Wishlist</div>
               <div className="price border border-t-black">Rs 648.00</div>
-              <button className="paydbtn" onClick={createProduct}>
-                Buy Now
-              </button>
+              <PreviewBtn view={view} size={size} category={category} />
             </div>
-
           </div>
         </div>
 
@@ -404,8 +438,6 @@ const Home = () => {
         </div>
 
       </div>
-
-
 
       {/* bottom cards */}
       {/* <div className="sm:pt-10 md:pt-36">

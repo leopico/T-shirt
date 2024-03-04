@@ -1,6 +1,7 @@
 import { fabric } from "fabric";
 import { createSpecificShape } from "./shapes";
 import { defaultImageElement } from "../constants/constant";
+import html2canvas from 'html2canvas';
 
 export const initializeFabric = ({ fabricRef, canvasRef }) => {
 
@@ -12,6 +13,20 @@ export const initializeFabric = ({ fabricRef, canvasRef }) => {
   });
 
   fabricRef.current = canvas;
+
+  return canvas;
+};
+
+export const initializeBackFabric = ({ backFabricRef, backCanvasRef }) => {
+
+  const canvasElement = document.getElementById("back-canvas");
+
+  const canvas = new fabric.Canvas(backCanvasRef.current, {
+    width: canvasElement?.clientWidth,
+    height: canvasElement?.clientHeight,
+  });
+
+  backFabricRef.current = canvas;
 
   return canvas;
 };
@@ -141,13 +156,13 @@ export const handleCanvasSelectionCreated = ({
       height: scaledHeight.toFixed(0).toString() || "",
 
       fill: selectedElement.fill?.toString() || "",
-      
+
       stroke: selectedElement.stroke || "",
-      
+
       fontSize: selectedElement.fontSize || "",
-      
+
       fontFamily: selectedElement.fontFamily || "",
-      
+
       fontWeight: selectedElement.fontWeight || "",
     });
   }
@@ -164,3 +179,29 @@ export const handleResize = ({ canvas }) => {
     height: canvasElement.clientHeight,
   });
 };
+
+export const captureFrontView = async (setCapturedFrontView) => {
+  try {
+    // Capture front view
+    const frontDiv = document.getElementById('front-capture');
+    const capturedFrontContent = await html2canvas(frontDiv);
+    await setCapturedFrontView(capturedFrontContent.toDataURL('image/png'));
+  } catch (error) {
+    console.error('Error capturing views:', error);
+  }
+};
+
+export const captureBackView = async (setCapturedBackView) => {
+  try {
+    // Capture front view
+    const backDiv = document.getElementById('back-capture');
+    const capturedBackContent = await html2canvas(backDiv);
+    await setCapturedBackView(capturedBackContent.toDataURL('image/png'));
+  } catch (error) {
+    console.error('Error capturing views:', error);
+  }
+};
+
+
+
+
