@@ -18,6 +18,7 @@ import Sticker3 from "/assets/sticker3.png";
 import SelectColor from "@/components/home/SelectColor";
 import SelectView from "@/components/home/selectView";
 import PreviewBtn from "../components/home/PreviewBtn";
+import BuyBtn from "@/components/home/BuyBtn";
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -27,6 +28,8 @@ const Home = () => {
   let [view, setView] = useState("front");
   let [showView, setShowView] = useState(false);
   const [frontPrintStyle, setFrontPrintStyle] = useState("text");
+
+  //for final capture both of front and back view
 
 
 
@@ -418,9 +421,17 @@ const Home = () => {
             />
 
             <div className="footer w-full">
-              <div className="wishlist flex items-center justify-center border border-t-black border-r-black">Wishlist</div>
-              <div className="price border border-t-black">Rs 648.00</div>
-              <PreviewBtn view={view} size={size} category={category} />
+              <PreviewBtn
+                view={view}
+              />
+              <div className="wishlist flex items-center justify-center border border-t-black border-r-black">
+                Wishlist
+              </div>
+              <div className="price border border-t-black">Rs 999.00</div>
+              <BuyBtn
+                size={size}
+                category={category}
+              />
             </div>
           </div>
         </div>

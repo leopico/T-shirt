@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import Sticker1 from "/assets/sticker1.png";
+import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { captureBackView, captureFrontView } from '@/libs/canvas';
 
-const PreviewBtn = ({ view, size, category }) => {
+const PreviewBtn = ({
+  view,
+}) => {
   const [popupOpened, setPopupOpened] = useState(false);
   const [capturedFrontView, setCapturedFrontView] = useState(null);
   const [capturedBackView, setCapturedBackView] = useState(null);
+  
 
   const handlePopupOpen = () => {
     setPopupOpened((pre) => !pre);
   };
 
-
   return (
     <div className='w-[50%] relative'>
-      <button className="paydbtn" onClick={handlePopupOpen}>
+      <button className="previewbtn" onClick={handlePopupOpen}>
         preview
       </button>
       {popupOpened && (
@@ -53,29 +54,24 @@ const PreviewBtn = ({ view, size, category }) => {
               }
 
             </div>
-            <div className='mt-2 flex flex-col justify-start space-y-1 myFont1 font-semibold'>
-              <span>size: {size ? size : "please choose size" }</span>
-              <span>category: {category ? category : "please choose category" }</span>
-            </div>
-            <div className='flex justify-between items-center mt-2'>
+            <div className='flex justify-end items-center mt-2'>
               <div className='flex justify-start items-center'>
                 {
                   view === "front" && (
-                    <Button className="myFont text-[8px] md:text-xs p-1 md:p-2" onClick={() => captureFrontView(setCapturedFrontView)}>
+                    <Button className="myFont text-[8px] md:text-xs p-1 md:p-2"
+                      onClick={() => captureFrontView(setCapturedFrontView)}>
                       update image
                     </Button>
                   )
                 }
                 {
                   view === "back" && (
-                    <Button className="myFont text-[8px] md:stext-xs p-1" onClick={() => captureBackView(setCapturedBackView)}>
+                    <Button className="myFont text-[8px] md:text-xs p-1"
+                      onClick={() => captureBackView(setCapturedBackView)}>
                       update image
                     </Button>
                   )
                 }
-              </div>
-              <div className='flex justify-end items-center' onClick={() => alert("coming soon")}>
-                <Button className="myFont text-xs">buy now</Button>
               </div>
             </div>
           </div>

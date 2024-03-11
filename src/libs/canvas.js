@@ -185,21 +185,34 @@ export const captureFrontView = async (setCapturedFrontView) => {
     // Capture front view
     const frontDiv = document.getElementById('front-capture');
     const capturedFrontContent = await html2canvas(frontDiv);
-    await setCapturedFrontView(capturedFrontContent.toDataURL('image/png'));
+    const existingCapturedFrontView = localStorage.getItem('capturedFrontView');
+    if (existingCapturedFrontView) {
+      localStorage.removeItem('capturedFrontView');
+    }
+    const imageDataURL = capturedFrontContent.toDataURL('image/png');
+    localStorage.setItem('capturedFrontView', imageDataURL);
+    setCapturedFrontView(imageDataURL); // Update the finalFrontView state in BuyBtn
   } catch (error) {
     console.error('Error capturing views:', error);
   }
 };
+
 
 export const captureBackView = async (setCapturedBackView) => {
   try {
     // Capture front view
     const backDiv = document.getElementById('back-capture');
     const capturedBackContent = await html2canvas(backDiv);
-    await setCapturedBackView(capturedBackContent.toDataURL('image/png'));
+    const existingCapturedBackView = localStorage.getItem("capturedBackView");
+    if (existingCapturedBackView) {
+      localStorage.removeItem('capturedBackView');
+    };
+    const imageDataURL = capturedBackContent.toDataURL('image/png');
+    localStorage.setItem('capturedBackView', imageDataURL);
+    await setCapturedBackView(imageDataURL);
   } catch (error) {
     console.error('Error capturing views:', error);
-  }
+  };
 };
 
 

@@ -64,7 +64,7 @@ function FrontPrintStyle({
         </button>
       </div>
 
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full pb-2 sm:pb-0">
         <div className="w-full">
           {frontPrintStyle === "text" && (
             <div className="flex w-full h-36 items-center justify-between px-1 md:px-3">
